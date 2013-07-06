@@ -52,6 +52,7 @@
     self.pausingBlock = nil;
     self.resumingBlock = nil;
     self.failedBlock = nil;
+    
     [super dealloc];
 }
 
@@ -62,9 +63,9 @@
 // Method begin operation. You should not be override this method.
 - (void)start
 {
-    if (!isFinished && !isCanceled && !isExecuting)
+    if (!isFinished && !isCanceled && !isExecuting && _currentQueue)
     {
-        if (![self startInNewThreadWithSelector:@selector(start)])
+        dispatch_async(_currentQueue, ^
         {
             isExecuting = YES;
             isStarted = YES;
@@ -80,82 +81,102 @@
                 
                 if (!isPaused)
                 {
-                    [self performSelector:@selector(_main) onThread:_thread withObject:nil waitUntilDone:NO];
+                    dispatch_async(_currentQueue, ^
+                    {
+                        [self _main];
+                    });
                 }
                 
                 [self _start];
-            }   
-        }
+            }
+        });
     }
 }
 
 // Method finishing operation. You should not be override this method.
 - (void)finish
 {
-    if (![self startInNewThreadWithSelector:@selector(finish)])
-    {   
-        @autoreleasepool
+    if (!isFinished && _currentQueue)
+    {
+        dispatch_async(_currentQueue, ^
         {
-            if (finishingBlock)
+            @autoreleasepool
             {
-                finishingBlock(self);
+                if (finishingBlock)
+                {
+                    finishingBlock(self);
+                }
+                
+                [self _finish];
             }
             
-            [self _finish];
-        }
-        
-        isFinished = YES;
-        isExecuting = NO;
-        
-        [self cancelThread];
+            isFinished = YES;
+            isExecuting = NO;
+            
+            [self cancelThread];
+        });
     }
 }
 
 // Method canceling operation. You should not be override this method.
 - (void)cancel
 {
-    if (![self startInNewThreadWithSelector:@selector(cancel)])
+    if (!isCanceled && _currentQueue)
     {
-        @autoreleasepool
+        dispatch_async(_currentQueue, ^
         {
-            if (cancelingBlock)
+            @autoreleasepool
             {
-                cancelingBlock(self);
+                if (cancelingBlock)
+                {
+                    cancelingBlock(self);
+                }
+                
+                [self _cancel];
             }
             
-            [self _cancel];
-        }
-        
-        isExecuting = NO;
-        isCanceled = YES;
-        
-        [self cancelThread];
+            isExecuting = NO;
+            isCanceled = YES;
+            
+            [self cancelThread];
+        });
     }
 }
 
 // Method pausing operation. You should not be override this method.
 - (void)pause
 {
-    if (![self startInNewThreadWithSelector:@selector(pause)])
+    if (!isPaused && isExecuting && _currentQueue)
     {
-        @autoreleasepool
+        dispatch_group_t group = dispatch_group_create();
+        
+        dispatch_group_async(group, _currentQueue, ^
         {
-            if (pausingBlock)
+            @autoreleasepool
             {
-                pausingBlock(self);
+                if (pausingBlock)
+                {
+                    pausingBlock(self);
+                }
+                
+                [self _pause];
             }
             
-            [self _pause];
-        }
+            isPaused = YES;
+        });
         
-        isPaused = YES;
+        dispatch_group_wait(group, DISPATCH_TIME_FOREVER);
+        
+        dispatch_suspend(_currentQueue);
+        
+        dispatch_release(group);
     }
 }
 
 // Method resuming operation. You should not be override this method.
 - (void)resume
 {
-    if (![self startInNewThreadWithSelector:@selector(resume)])
+    if (isPaused && _currentQueue)
     {
         @autoreleasepool
         {
@@ -166,6 +187,8 @@
             
             [self _resume];
         }
+        
+        dispatch_resume(_currentQueue);
         
         isPaused = NO;
     }
@@ -188,6 +211,11 @@
 // Loop method
 - (void)loop
 {
+    if (_currentQueue == nil)
+    {
+        _currentQueue = dispatch_get_current_queue();
+    }
+    
     while (!isCanceled && !isFinished)
     {
         @autoreleasepool
@@ -197,36 +225,11 @@
     }
 }
 
-// Method start current thread and set given selector set to invoke in this thread
-- (BOOL)startInNewThreadWithSelector:(SEL)selector
-{
-    BOOL flag = NO;
-    
-    if (selector != nil)
-    {
-        if (!_thread)
-        {
-            flag = YES;
-            [self startRunLoop];
-            [self performSelector:selector onThread:_thread withObject:nil waitUntilDone:NO];
-        }
-        else if (![[NSThread currentThread] isEqual:_thread])
-        {
-            flag = YES;
-            [self performSelector:selector onThread:_thread withObject:nil waitUntilDone:NO];
-        }
-    }
-    
-    return flag;
-}
-
 // Methods cancel all operation on _thread
 - (void)cancelThread
 {
     if (_thread)
     {
-        [[NSRunLoop currentRunLoop] cancelPerformSelectorsWithTarget:self];
-        [NSThread cancelPreviousPerformRequestsWithTarget:self];
         [_thread cancel];
     }
 }

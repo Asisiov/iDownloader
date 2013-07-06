@@ -7,12 +7,7 @@
 	<key>--create-docset</key>
 	<true/>
 	<key>--ignore</key>
-	<array>
-		<string>Bluetoad</string>
-		<string>JSON</string>
-		<string>Omniture</string>
-		<string>publish</string>
-	</array>
+	<array/>
 	<key>--install-docset</key>
 	<true/>
 	<key>--output</key>

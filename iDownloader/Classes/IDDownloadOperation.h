@@ -23,6 +23,7 @@ typedef void (^IDDownloadFailedBlock)(id<IDDowload>, NSString *);
 {
 @private
     NSThread *_thread;  // private thread current instance of operation
+    dispatch_queue_t _currentQueue;
 }
 
 /// -------------------------------------------------------------------------------------------------------------------------------------------------------

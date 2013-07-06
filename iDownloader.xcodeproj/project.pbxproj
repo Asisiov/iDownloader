@@ -36,6 +36,7 @@
 		88A42FA9178774E9009FB554 /* IDViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88A42FA6178774E9009FB554 /* IDViewController.m */; };
 		88A42FAF1787751B009FB554 /* AppledocSettings.plist in Resources */ = {isa = PBXBuildFile; fileRef = 88A42FAE1787751B009FB554 /* AppledocSettings.plist */; };
 		88ECD331178820A000B7F287 /* IDDownloadOperation+IDDownloadOperation_Protected.m in Sources */ = {isa = PBXBuildFile; fileRef = 88ECD330178820A000B7F287 /* IDDownloadOperation+IDDownloadOperation_Protected.m */; };
+		88ECD33617882C4D00B7F287 /* IDDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 88ECD33517882C4D00B7F287 /* IDDownloader.m */; };
 		88F3E30017877BC200CD5AE4 /* IDDownloadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 88F3E2FF17877BC200CD5AE4 /* IDDownloadOperation.m */; };
 /* End PBXBuildFile section */
 
@@ -63,6 +64,8 @@
 		88A42FAE1787751B009FB554 /* AppledocSettings.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = AppledocSettings.plist; sourceTree = "<group>"; };
 		88ECD32F178820A000B7F287 /* IDDownloadOperation+IDDownloadOperation_Protected.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "IDDownloadOperation+IDDownloadOperation_Protected.h"; sourceTree = "<group>"; };
 		88ECD330178820A000B7F287 /* IDDownloadOperation+IDDownloadOperation_Protected.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "IDDownloadOperation+IDDownloadOperation_Protected.m"; sourceTree = "<group>"; };
+		88ECD33417882C4D00B7F287 /* IDDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDDownloader.h; sourceTree = "<group>"; };
+		88ECD33517882C4D00B7F287 /* IDDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDDownloader.m; sourceTree = "<group>"; };
 		88F3E2FE17877BC200CD5AE4 /* IDDownloadOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDDownloadOperation.h; sourceTree = "<group>"; };
 		88F3E2FF17877BC200CD5AE4 /* IDDownloadOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDDownloadOperation.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -180,6 +183,26 @@
 			path = Resource;
 			sourceTree = "<group>";
 		};
+		88ECD33217882C1800B7F287 /* Root Class */ = {
+			isa = PBXGroup;
+			children = (
+				88ECD32F178820A000B7F287 /* IDDownloadOperation+IDDownloadOperation_Protected.h */,
+				88ECD330178820A000B7F287 /* IDDownloadOperation+IDDownloadOperation_Protected.m */,
+				88F3E2FE17877BC200CD5AE4 /* IDDownloadOperation.h */,
+				88F3E2FF17877BC200CD5AE4 /* IDDownloadOperation.m */,
+			);
+			name = "Root Class";
+			sourceTree = "<group>";
+		};
+		88ECD33317882C2800B7F287 /* Concrete Classes */ = {
+			isa = PBXGroup;
+			children = (
+				88ECD33417882C4D00B7F287 /* IDDownloader.h */,
+				88ECD33517882C4D00B7F287 /* IDDownloader.m */,
+			);
+			name = "Concrete Classes";
+			sourceTree = "<group>";
+		};
 		88F3E2FB17877B6500CD5AE4 /* Root Download Class */ = {
 			isa = PBXGroup;
 			children = (
@@ -200,10 +223,8 @@
 		88F3E2FD17877B9900CD5AE4 /* Download Operations */ = {
 			isa = PBXGroup;
 			children = (
-				88ECD330178820A000B7F287 /* IDDownloadOperation+IDDownloadOperation_Protected.m */,
-				88F3E2FE17877BC200CD5AE4 /* IDDownloadOperation.h */,
-				88F3E2FF17877BC200CD5AE4 /* IDDownloadOperation.m */,
-				88ECD32F178820A000B7F287 /* IDDownloadOperation+IDDownloadOperation_Protected.h */,
+				88ECD33217882C1800B7F287 /* Root Class */,
+				88ECD33317882C2800B7F287 /* Concrete Classes */,
 			);
 			name = "Download Operations";
 			sourceTree = "<group>";
@@ -300,6 +321,7 @@
 				884185071787763200213CCB /* IDDownloadContext.m in Sources */,
 				88F3E30017877BC200CD5AE4 /* IDDownloadOperation.m in Sources */,
 				88ECD331178820A000B7F287 /* IDDownloadOperation+IDDownloadOperation_Protected.m in Sources */,
+				88ECD33617882C4D00B7F287 /* IDDownloader.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
