@@ -6,22 +6,43 @@
 	objectVersion = 46;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		88A42FAA17877504009FB554 /* Documentation */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 88A42FAB17877504009FB554 /* Build configuration list for PBXAggregateTarget "Documentation" */;
+			buildPhases = (
+				88A42FB017877583009FB554 /* ShellScript */,
+			);
+			dependencies = (
+			);
+			name = Documentation;
+			productName = Documentation;
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
+		884185071787763200213CCB /* IDDownloadContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 884185061787763200213CCB /* IDDownloadContext.m */; };
 		88A42F7D178774B8009FB554 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88A42F7C178774B8009FB554 /* UIKit.framework */; };
 		88A42F7F178774B8009FB554 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88A42F7E178774B8009FB554 /* Foundation.framework */; };
 		88A42F81178774B8009FB554 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88A42F80178774B8009FB554 /* CoreGraphics.framework */; };
 		88A42F87178774B8009FB554 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 88A42F85178774B8009FB554 /* InfoPlist.strings */; };
 		88A42F89178774B8009FB554 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 88A42F88178774B8009FB554 /* main.m */; };
-		88A42F8D178774B8009FB554 /* IDAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 88A42F8C178774B8009FB554 /* IDAppDelegate.m */; };
 		88A42F8F178774B8009FB554 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 88A42F8E178774B8009FB554 /* Default.png */; };
 		88A42F91178774B8009FB554 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88A42F90178774B8009FB554 /* Default@2x.png */; };
 		88A42F93178774B8009FB554 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88A42F92178774B8009FB554 /* Default-568h@2x.png */; };
-		88A42F96178774B8009FB554 /* IDViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88A42F95178774B8009FB554 /* IDViewController.m */; };
 		88A42F99178774B8009FB554 /* IDViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 88A42F97178774B8009FB554 /* IDViewController_iPhone.xib */; };
 		88A42F9C178774B8009FB554 /* IDViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 88A42F9A178774B8009FB554 /* IDViewController_iPad.xib */; };
+		88A42FA8178774E9009FB554 /* IDAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 88A42FA4178774E9009FB554 /* IDAppDelegate.m */; };
+		88A42FA9178774E9009FB554 /* IDViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88A42FA6178774E9009FB554 /* IDViewController.m */; };
+		88A42FAF1787751B009FB554 /* AppledocSettings.plist in Resources */ = {isa = PBXBuildFile; fileRef = 88A42FAE1787751B009FB554 /* AppledocSettings.plist */; };
+		88ECD331178820A000B7F287 /* IDDownloadOperation+IDDownloadOperation_Protected.m in Sources */ = {isa = PBXBuildFile; fileRef = 88ECD330178820A000B7F287 /* IDDownloadOperation+IDDownloadOperation_Protected.m */; };
+		88F3E30017877BC200CD5AE4 /* IDDownloadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 88F3E2FF17877BC200CD5AE4 /* IDDownloadOperation.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		88418504178775E100213CCB /* IDDowload.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDDowload.h; sourceTree = "<group>"; };
+		884185051787763200213CCB /* IDDownloadContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDDownloadContext.h; sourceTree = "<group>"; };
+		884185061787763200213CCB /* IDDownloadContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDDownloadContext.m; sourceTree = "<group>"; };
 		88A42F79178774B8009FB554 /* iDownloader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iDownloader.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		88A42F7C178774B8009FB554 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		88A42F7E178774B8009FB554 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -30,15 +51,20 @@
 		88A42F86178774B8009FB554 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		88A42F88178774B8009FB554 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		88A42F8A178774B8009FB554 /* iDownloader-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iDownloader-Prefix.pch"; sourceTree = "<group>"; };
-		88A42F8B178774B8009FB554 /* IDAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IDAppDelegate.h; sourceTree = "<group>"; };
-		88A42F8C178774B8009FB554 /* IDAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IDAppDelegate.m; sourceTree = "<group>"; };
 		88A42F8E178774B8009FB554 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		88A42F90178774B8009FB554 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		88A42F92178774B8009FB554 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
-		88A42F94178774B8009FB554 /* IDViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IDViewController.h; sourceTree = "<group>"; };
-		88A42F95178774B8009FB554 /* IDViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IDViewController.m; sourceTree = "<group>"; };
 		88A42F98178774B8009FB554 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/IDViewController_iPhone.xib; sourceTree = "<group>"; };
 		88A42F9B178774B8009FB554 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/IDViewController_iPad.xib; sourceTree = "<group>"; };
+		88A42FA3178774E9009FB554 /* IDAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDAppDelegate.h; sourceTree = "<group>"; };
+		88A42FA4178774E9009FB554 /* IDAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDAppDelegate.m; sourceTree = "<group>"; };
+		88A42FA5178774E9009FB554 /* IDViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDViewController.h; sourceTree = "<group>"; };
+		88A42FA6178774E9009FB554 /* IDViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDViewController.m; sourceTree = "<group>"; };
+		88A42FAE1787751B009FB554 /* AppledocSettings.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = AppledocSettings.plist; sourceTree = "<group>"; };
+		88ECD32F178820A000B7F287 /* IDDownloadOperation+IDDownloadOperation_Protected.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "IDDownloadOperation+IDDownloadOperation_Protected.h"; sourceTree = "<group>"; };
+		88ECD330178820A000B7F287 /* IDDownloadOperation+IDDownloadOperation_Protected.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "IDDownloadOperation+IDDownloadOperation_Protected.m"; sourceTree = "<group>"; };
+		88F3E2FE17877BC200CD5AE4 /* IDDownloadOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDDownloadOperation.h; sourceTree = "<group>"; };
+		88F3E2FF17877BC200CD5AE4 /* IDDownloadOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDDownloadOperation.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +81,33 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		88418501178775B400213CCB /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				88A42FA5178774E9009FB554 /* IDViewController.h */,
+				88A42FA6178774E9009FB554 /* IDViewController.m */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		88418502178775C100213CCB /* App */ = {
+			isa = PBXGroup;
+			children = (
+				88418503178775C600213CCB /* Downloader */,
+			);
+			name = App;
+			sourceTree = "<group>";
+		};
+		88418503178775C600213CCB /* Downloader */ = {
+			isa = PBXGroup;
+			children = (
+				88F3E2FB17877B6500CD5AE4 /* Root Download Class */,
+				88F3E2FC17877B7F00CD5AE4 /* Download Model */,
+				88F3E2FD17877B9900CD5AE4 /* Download Operations */,
+			);
+			name = Downloader;
+			sourceTree = "<group>";
+		};
 		88A42F70178774B8009FB554 = {
 			isa = PBXGroup;
 			children = (
@@ -85,12 +138,8 @@
 		88A42F82178774B8009FB554 /* iDownloader */ = {
 			isa = PBXGroup;
 			children = (
-				88A42F8B178774B8009FB554 /* IDAppDelegate.h */,
-				88A42F8C178774B8009FB554 /* IDAppDelegate.m */,
-				88A42F94178774B8009FB554 /* IDViewController.h */,
-				88A42F95178774B8009FB554 /* IDViewController.m */,
-				88A42F97178774B8009FB554 /* IDViewController_iPhone.xib */,
-				88A42F9A178774B8009FB554 /* IDViewController_iPad.xib */,
+				88A42FA2178774E9009FB554 /* Classes */,
+				88A42FA7178774E9009FB554 /* Resource */,
 				88A42F83178774B8009FB554 /* Supporting Files */,
 			);
 			path = iDownloader;
@@ -99,6 +148,7 @@
 		88A42F83178774B8009FB554 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				88A42FAE1787751B009FB554 /* AppledocSettings.plist */,
 				88A42F84178774B8009FB554 /* iDownloader-Info.plist */,
 				88A42F85178774B8009FB554 /* InfoPlist.strings */,
 				88A42F88178774B8009FB554 /* main.m */,
@@ -108,6 +158,54 @@
 				88A42F92178774B8009FB554 /* Default-568h@2x.png */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		88A42FA2178774E9009FB554 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				88418502178775C100213CCB /* App */,
+				88418501178775B400213CCB /* View Controllers */,
+				88A42FA3178774E9009FB554 /* IDAppDelegate.h */,
+				88A42FA4178774E9009FB554 /* IDAppDelegate.m */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		88A42FA7178774E9009FB554 /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				88A42F97178774B8009FB554 /* IDViewController_iPhone.xib */,
+				88A42F9A178774B8009FB554 /* IDViewController_iPad.xib */,
+			);
+			path = Resource;
+			sourceTree = "<group>";
+		};
+		88F3E2FB17877B6500CD5AE4 /* Root Download Class */ = {
+			isa = PBXGroup;
+			children = (
+				88418504178775E100213CCB /* IDDowload.h */,
+			);
+			name = "Root Download Class";
+			sourceTree = "<group>";
+		};
+		88F3E2FC17877B7F00CD5AE4 /* Download Model */ = {
+			isa = PBXGroup;
+			children = (
+				884185051787763200213CCB /* IDDownloadContext.h */,
+				884185061787763200213CCB /* IDDownloadContext.m */,
+			);
+			name = "Download Model";
+			sourceTree = "<group>";
+		};
+		88F3E2FD17877B9900CD5AE4 /* Download Operations */ = {
+			isa = PBXGroup;
+			children = (
+				88ECD330178820A000B7F287 /* IDDownloadOperation+IDDownloadOperation_Protected.m */,
+				88F3E2FE17877BC200CD5AE4 /* IDDownloadOperation.h */,
+				88F3E2FF17877BC200CD5AE4 /* IDDownloadOperation.m */,
+				88ECD32F178820A000B7F287 /* IDDownloadOperation+IDDownloadOperation_Protected.h */,
+			);
+			name = "Download Operations";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -153,6 +251,7 @@
 			projectRoot = "";
 			targets = (
 				88A42F78178774B8009FB554 /* iDownloader */,
+				88A42FAA17877504009FB554 /* Documentation */,
 			);
 		};
 /* End PBXProject section */
@@ -168,10 +267,27 @@
 				88A42F93178774B8009FB554 /* Default-568h@2x.png in Resources */,
 				88A42F99178774B8009FB554 /* IDViewController_iPhone.xib in Resources */,
 				88A42F9C178774B8009FB554 /* IDViewController_iPad.xib in Resources */,
+				88A42FAF1787751B009FB554 /* AppledocSettings.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		88A42FB017877583009FB554 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/Applications/appledoc --logformat xcode \"$SOURCE_ROOT/$PROJECT_NAME\"";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		88A42F75178774B8009FB554 /* Sources */ = {
@@ -179,8 +295,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				88A42F89178774B8009FB554 /* main.m in Sources */,
-				88A42F8D178774B8009FB554 /* IDAppDelegate.m in Sources */,
-				88A42F96178774B8009FB554 /* IDViewController.m in Sources */,
+				88A42FA8178774E9009FB554 /* IDAppDelegate.m in Sources */,
+				88A42FA9178774E9009FB554 /* IDViewController.m in Sources */,
+				884185071787763200213CCB /* IDDownloadContext.m in Sources */,
+				88F3E30017877BC200CD5AE4 /* IDDownloadOperation.m in Sources */,
+				88ECD331178820A000B7F287 /* IDDownloadOperation+IDDownloadOperation_Protected.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -201,6 +320,7 @@
 				88A42F98178774B8009FB554 /* en */,
 			);
 			name = IDViewController_iPhone.xib;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		88A42F9A178774B8009FB554 /* IDViewController_iPad.xib */ = {
@@ -209,6 +329,7 @@
 				88A42F9B178774B8009FB554 /* en */,
 			);
 			name = IDViewController_iPad.xib;
+			path = ..;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -238,7 +359,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -262,7 +383,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -292,6 +413,20 @@
 			};
 			name = Release;
 		};
+		88A42FAC17877504009FB554 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		88A42FAD17877504009FB554 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -311,6 +446,16 @@
 				88A42FA1178774B8009FB554 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		88A42FAB17877504009FB554 /* Build configuration list for PBXAggregateTarget "Documentation" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				88A42FAC17877504009FB554 /* Debug */,
+				88A42FAD17877504009FB554 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

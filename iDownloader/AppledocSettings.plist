@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>--company-id</key>
+	<string>com.Asisiov.iDownloader</string>
+	<key>--create-docset</key>
+	<true/>
+	<key>--ignore</key>
+	<array>
+		<string>Bluetoad</string>
+		<string>JSON</string>
+		<string>Omniture</string>
+		<string>publish</string>
+	</array>
+	<key>--install-docset</key>
+	<true/>
+	<key>--output</key>
+	<string>/tmp</string>
+	<key>--project-company</key>
+	<string>Asisiov</string>
+	<key>--project-name</key>
+	<string>iDownloader</string>
+	<key>--keep-undocumented-objects</key>
+	<false/>
+	<key>--keep-undocumented-members</key>
+	<false/>
+	<key>--warn-undocumented-object</key>
+	<false/>
+	<key>--warn-undocumented-member</key>
+	<false/>
+	<key>--warn-empty-description</key>
+	<false/>
+	<key>--warn-missing-arg</key>
+	<false/>
+	<key>--warn-unknown-directive</key>
+	<true/>
+	<key>--repeat-first-par</key>
+	<false/>
+</dict>
+</plist>
