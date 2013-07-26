@@ -7,24 +7,41 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "IDDowload.h"
+#import "IDDownload.h"
 
 /// The type of separate blocks for download events
-typedef void (^IDDownloadBlock)(id<IDDowload>);
+typedef void (^IDDownloadBlock)(id<IDDownload>);
 
 /// The type of separate blocks for error download event
-typedef void (^IDDownloadFailedBlock)(id<IDDowload>, NSString *);
+typedef void (^IDDownloadFailedBlock)(id<IDDownload>, NSString *);
 
 /**
  The class IDDownloadOperation is root class for all operation. The class IDDownloadOperation incapsulate all work with threads and manipulate operation.
  */
 
-@interface IDDownloadOperation : NSObject <IDDowload>
+@interface IDDownloadOperation : NSObject <IDDownload>
 {
-@private
-    NSThread *_thread;  // private thread current instance of operation
+@protected
+    id<IDDownload> contextObject;
+    NSMutableDictionary *userData;
+    
+@protected
     dispatch_queue_t _currentQueue;
+    
+@protected
+    NSRunLoop *_runLoop;
 }
+
+/// ---------------------------------------------------------------------------------------------------
+/// @name Intialization Methods
+/// ---------------------------------------------------------------------------------------------------
+
+/**
+ Method initial and return a new object.
+ @param contextData object which contein url, name, e t.c.
+ @return id
+ */
+- (id)initWithContext:(id<IDDownload>)contextData;
 
 /// -------------------------------------------------------------------------------------------------------------------------------------------------------
 /// @name Property of State
@@ -32,6 +49,9 @@ typedef void (^IDDownloadFailedBlock)(id<IDDowload>, NSString *);
 
 /** Name */
 @property (nonatomic, copy) NSString *name;
+
+/** Value the urk property is url to network file. */
+@property (nonatomic, copy) NSString *url;
 
 /** Flag indicate the state of object if he is equal 'YES' then object already fineshed loading. */
 @property (nonatomic, readonly) BOOL isFinished;
@@ -52,23 +72,33 @@ typedef void (^IDDownloadFailedBlock)(id<IDDowload>, NSString *);
 /// @name Download blocks for events
 /// -------------------------------------------------------------------------------------------------------------------------------------------------------
 
-/** The canceledBlock invoke when operation finish download. */
+/** The canceledBlock invoke when operation finish download. Given object to bloack is current operation. */
 @property (nonatomic, copy) IDDownloadBlock finishingBlock;
 
-/** The cancelingBlock invoke when operation cancling download. */
+/** The cancelingBlock invoke when operation cancling download. Given object to bloack is current operation. */
 @property (nonatomic, copy) IDDownloadBlock cancelingBlock;
 
-/** The startingBlock invoke when operation starting download. */
+/** The startingBlock invoke when operation starting download. Given object to bloack is current operation. */
 @property (nonatomic, copy) IDDownloadBlock startingBlock;
 
-/** The pausingBlock invoke when operation pausing download. */
+/** The pausingBlock invoke when operation pausing download. Given object to bloack is current operation. */
 @property (nonatomic, copy) IDDownloadBlock pausingBlock;
 
-/** The resumingBlock invoke when operation resuming download. */
+/** The resumingBlock invoke when operation resuming download. Given object to bloack is current operation. */
 @property (nonatomic, copy) IDDownloadBlock resumingBlock;
 
-/** The resumingBlock invoke when there is an error loading. */
+/** The resumingBlock invoke when there is an error loading. Given object to bloack is current operation. */
 @property (nonatomic, copy) IDDownloadFailedBlock failedBlock;
+
+/// -------------------------------------------------------------------------------------------------------------------------------------------------------
+/// @name Settings
+/// -------------------------------------------------------------------------------------------------------------------------------------------------------
+
+/** Set additional information. */
+@property (nonatomic, retain) NSMutableDictionary *userData;
+
+/** Return context download object. */
+@property (nonatomic, readonly) id<IDDownload> context;
 
 /// -------------------------------------------------------------------------------------------------------------------------------------------------------
 /// @name Business Logic Methods

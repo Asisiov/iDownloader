@@ -1,5 +1,5 @@
 //
-//  IDDowload.h
+//  IDDownload.h
 //  iDownloader
 //
 //  Created by iMac Asisiov on 06.07.13.
@@ -11,7 +11,7 @@
 /**
  IDDownload is abstract class. IDDOwnload contain common property.
  */
-@protocol IDDowload <NSObject>
+@protocol IDDownload <NSObject>
 
 /// ------------------------------------------------------------
 /// @name Property of State
@@ -19,6 +19,9 @@
 
 /** Name */
 @property (nonatomic, copy) NSString *name;
+
+/** Value the urk property is url to network file. */
+@property (nonatomic, copy) NSString *url;
 
 /** Flag indicate the state of object if he is equal 'YES' then object already fineshed loading. */
 @property (nonatomic, readonly) BOOL isFinished;

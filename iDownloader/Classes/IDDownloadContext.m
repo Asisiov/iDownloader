@@ -10,11 +10,15 @@
 
 @implementation IDDownloadContext
 
+@synthesize downloadedBytes;
 @synthesize downloadedMB;
+@synthesize fullSizeInMB;
 @synthesize sizeInMB;
 @synthesize stateLoadingInProcent;
 @synthesize timeLoading;
 @synthesize fullTime;
+@synthesize destPath;
+@synthesize url;
 @synthesize name;
 @synthesize isFinished;
 @synthesize isCanceled;
@@ -26,9 +30,12 @@
 - (void)dealloc
 {
     self.name = nil;
+    self.fullSizeInMB = nil;
     self.sizeInMB = nil;
     self.timeLoading = nil;
     self.fullTime = nil;
+    self.destPath = nil;
+    self.url = nil;
     [super dealloc];
 }
 

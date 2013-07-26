@@ -7,7 +7,23 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "IDManagerDownloaders.h"
 
 @interface IDViewController : UIViewController
+{
+@protected
+    IBOutlet IDManagerDownloaders *downloader;
+    
+@private
+    NSMutableArray *downloadItems;
+}
+
+- (IBAction)download:(id)sender;
+
+- (IBAction)pause:(id)sender;
+
+- (IBAction)resume:(id)sender;
+
+- (IBAction)cancel:(id)sender;
 
 @end

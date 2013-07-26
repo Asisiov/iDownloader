@@ -10,8 +10,6 @@
 
 @implementation IDDownloadOperation (IDDownloadOperation_Protected)
 
-#pragma mark Default Implementation Protected Methods
-
 // Method begin operation. You should be override this method.
 - (void)_start
 {
@@ -41,7 +39,5 @@
 - (void)_main
 {
 }
-
-#pragma mark -
 
 @end

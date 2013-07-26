@@ -9,7 +9,7 @@
 #import "IDDownloadOperation.h"
 
 /**
- IDDownloadOperation_Protected category contain protected methods which you may override.
+ IDDownloadOperation_Protected category contain protected methods which you may override. All methods call in autorelease pool.
  */
 
 @interface IDDownloadOperation (IDDownloadOperation_Protected)

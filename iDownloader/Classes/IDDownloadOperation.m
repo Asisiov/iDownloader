@@ -40,11 +40,28 @@
 @synthesize pausingBlock;
 @synthesize resumingBlock;
 @synthesize failedBlock;
+@synthesize userData = userData;
+@synthesize context = contextObject;
 
 #pragma mark Implementation Initialization Methods
 
+// Method initial and return a new object.
+- (id)initWithContext:(id<IDDownload>)contextData
+{
+    self = [super init];
+    
+    if (self)
+    {
+        contextObject = [contextData retain];
+    }
+    
+    return self;
+}
+
 - (void)dealloc
 {
+    NSLog(@" ----- dealloc %@ -----", name);
+    
     self.name = nil;
     self.finishingBlock = nil;
     self.cancelingBlock = nil;
@@ -52,6 +69,15 @@
     self.pausingBlock = nil;
     self.resumingBlock = nil;
     self.failedBlock = nil;
+    self.userData = nil;
+    
+    [contextObject release];
+    
+    if (_currentQueue)
+    {
+        dispatch_release(_currentQueue);
+        _currentQueue = nil;
+    }
     
     [super dealloc];
 }
@@ -70,7 +96,7 @@
             isExecuting = YES;
             isStarted = YES;
             
-            NSLog(@"----- %s (%@) -----", __FUNCTION__, name);
+            NSLog(@"----- %s (%@) (%@) -----", __FUNCTION__, name, contextObject.url);
             
             @autoreleasepool
             {
@@ -83,13 +109,29 @@
                 {
                     dispatch_async(_currentQueue, ^
                     {
-                        [self _main];
+                        @autoreleasepool
+                        {
+                            [self _main];
+                        }
                     });
                 }
                 
                 [self _start];
             }
         });
+    }
+    else if (!_currentQueue)
+    {
+        [self startRunLoop];
+
+        if (_currentQueue)
+        {
+            [self start];
+        }
+//        if (_thread)
+//        {
+//            [self performSelector:@selector(start) onThread:_thread withObject:nil waitUntilDone:YES];
+//        }
     }
 }
 
@@ -102,12 +144,12 @@
         {
             @autoreleasepool
             {
+                [self _finish];
+                
                 if (finishingBlock)
                 {
                     finishingBlock(self);
                 }
-                
-                [self _finish];
             }
             
             isFinished = YES;
@@ -148,6 +190,7 @@
 {
     if (!isPaused && isExecuting && _currentQueue)
     {
+//        dispatch_suspend(_currentQueue);
         dispatch_group_t group = dispatch_group_create();
         
         dispatch_group_async(group, _currentQueue, ^
@@ -196,42 +239,51 @@
 
 #pragma mark -
 
+#pragma mark Implemntation Getters / Setters Methods
+
+- (void)setUrl:(NSString *)url_
+{
+}
+
+- (NSString *)url
+{
+    return nil;
+}
+
+#pragma mark -
+
 #pragma mark Implementation Private Methods
 
 // Method initial NSThread if need
 - (void)startRunLoop
-{
-    if (_thread == nil)
+{    
+    if (!_currentQueue)
     {
-        _thread = [[NSThread alloc] initWithTarget:self selector:@selector(load) object:nil];
-        [_thread start];
+        @autoreleasepool
+        {
+            NSString *queueName = [[NSString stringWithFormat:@"%@.operation.serial.queue", name] uppercaseString];
+            _currentQueue = dispatch_queue_create([queueName UTF8String], 0);
+        }
+    }
+    
+    if (!_runLoop)
+    {
+        dispatch_async(_currentQueue, ^
+        {
+            _runLoop = [NSRunLoop currentRunLoop];
+            [self loop];
+        });
     }
 }
 
 // Loop method
 - (void)loop
 {
-    if (_currentQueue == nil)
-    {
-        _currentQueue = dispatch_get_current_queue();
-    }
-    
-    while (!isCanceled && !isFinished)
-    {
-        @autoreleasepool
-        {
-            [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:0.2]];
-        }
-    }
 }
 
 // Methods cancel all operation on _thread
 - (void)cancelThread
 {
-    if (_thread)
-    {
-        [_thread cancel];
-    }
 }
 
 #pragma mark -

@@ -21,6 +21,9 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		880B0247178862D2005BAD60 /* IDFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 880B0246178862D2005BAD60 /* IDFile.m */; };
+		881382351788B9E900C09E68 /* IDManagerDownloaders.m in Sources */ = {isa = PBXBuildFile; fileRef = 881382341788B9E900C09E68 /* IDManagerDownloaders.m */; };
+		881382381788C14200C09E68 /* IDDownloaderBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 881382371788C14200C09E68 /* IDDownloaderBuilder.m */; };
 		884185071787763200213CCB /* IDDownloadContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 884185061787763200213CCB /* IDDownloadContext.m */; };
 		88A42F7D178774B8009FB554 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88A42F7C178774B8009FB554 /* UIKit.framework */; };
 		88A42F7F178774B8009FB554 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88A42F7E178774B8009FB554 /* Foundation.framework */; };
@@ -41,7 +44,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		88418504178775E100213CCB /* IDDowload.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDDowload.h; sourceTree = "<group>"; };
+		880B0245178862D2005BAD60 /* IDFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDFile.h; sourceTree = "<group>"; };
+		880B0246178862D2005BAD60 /* IDFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDFile.m; sourceTree = "<group>"; };
+		881382331788B9E900C09E68 /* IDManagerDownloaders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDManagerDownloaders.h; sourceTree = "<group>"; };
+		881382341788B9E900C09E68 /* IDManagerDownloaders.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDManagerDownloaders.m; sourceTree = "<group>"; };
+		881382361788C14200C09E68 /* IDDownloaderBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDDownloaderBuilder.h; sourceTree = "<group>"; };
+		881382371788C14200C09E68 /* IDDownloaderBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDDownloaderBuilder.m; sourceTree = "<group>"; };
+		88418504178775E100213CCB /* IDDownload.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDDownload.h; sourceTree = "<group>"; };
 		884185051787763200213CCB /* IDDownloadContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDDownloadContext.h; sourceTree = "<group>"; };
 		884185061787763200213CCB /* IDDownloadContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDDownloadContext.m; sourceTree = "<group>"; };
 		88A42F79178774B8009FB554 /* iDownloader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iDownloader.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -97,6 +106,8 @@
 			isa = PBXGroup;
 			children = (
 				88418503178775C600213CCB /* Downloader */,
+				880B0245178862D2005BAD60 /* IDFile.h */,
+				880B0246178862D2005BAD60 /* IDFile.m */,
 			);
 			name = App;
 			sourceTree = "<group>";
@@ -107,6 +118,8 @@
 				88F3E2FB17877B6500CD5AE4 /* Root Download Class */,
 				88F3E2FC17877B7F00CD5AE4 /* Download Model */,
 				88F3E2FD17877B9900CD5AE4 /* Download Operations */,
+				881382361788C14200C09E68 /* IDDownloaderBuilder.h */,
+				881382371788C14200C09E68 /* IDDownloaderBuilder.m */,
 			);
 			name = Downloader;
 			sourceTree = "<group>";
@@ -199,6 +212,8 @@
 			children = (
 				88ECD33417882C4D00B7F287 /* IDDownloader.h */,
 				88ECD33517882C4D00B7F287 /* IDDownloader.m */,
+				881382331788B9E900C09E68 /* IDManagerDownloaders.h */,
+				881382341788B9E900C09E68 /* IDManagerDownloaders.m */,
 			);
 			name = "Concrete Classes";
 			sourceTree = "<group>";
@@ -206,7 +221,7 @@
 		88F3E2FB17877B6500CD5AE4 /* Root Download Class */ = {
 			isa = PBXGroup;
 			children = (
-				88418504178775E100213CCB /* IDDowload.h */,
+				88418504178775E100213CCB /* IDDownload.h */,
 			);
 			name = "Root Download Class";
 			sourceTree = "<group>";
@@ -322,6 +337,9 @@
 				88F3E30017877BC200CD5AE4 /* IDDownloadOperation.m in Sources */,
 				88ECD331178820A000B7F287 /* IDDownloadOperation+IDDownloadOperation_Protected.m in Sources */,
 				88ECD33617882C4D00B7F287 /* IDDownloader.m in Sources */,
+				880B0247178862D2005BAD60 /* IDFile.m in Sources */,
+				881382351788B9E900C09E68 /* IDManagerDownloaders.m in Sources */,
+				881382381788C14200C09E68 /* IDDownloaderBuilder.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
