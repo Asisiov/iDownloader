@@ -21,9 +21,6 @@
 // If method return YES then he detach selector to new thread
 - (BOOL)startInNewThreadWithSelector:(SEL)selector;
 
-// Methods cancel all operation on _thread
-- (void)cancelThread;
-
 @end
 
 @implementation IDDownloadOperation
@@ -128,10 +125,6 @@
         {
             [self start];
         }
-//        if (_thread)
-//        {
-//            [self performSelector:@selector(start) onThread:_thread withObject:nil waitUntilDone:YES];
-//        }
     }
 }
 
@@ -154,8 +147,6 @@
             
             isFinished = YES;
             isExecuting = NO;
-            
-            [self cancelThread];
         });
     }
 }
@@ -179,8 +170,6 @@
             
             isExecuting = NO;
             isCanceled = YES;
-            
-            [self cancelThread];
         });
     }
 }
@@ -271,19 +260,8 @@
         dispatch_async(_currentQueue, ^
         {
             _runLoop = [NSRunLoop currentRunLoop];
-            [self loop];
         });
     }
-}
-
-// Loop method
-- (void)loop
-{
-}
-
-// Methods cancel all operation on _thread
-- (void)cancelThread
-{
 }
 
 #pragma mark -

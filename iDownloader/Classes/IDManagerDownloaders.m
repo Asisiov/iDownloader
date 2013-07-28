@@ -13,8 +13,8 @@
 
 @interface IDDownloadContext (Helpers_C_Functions)
 
-// Method get date dictionary with NSDate object
- NSDictionary *timeWithDate(NSDate *date);
+// Method get time as string with dictionary. String returning in autoreleasepool.
+NSString *timeStringWithDictionary(NSDictionary *timeDictionary);
 
 @end
 
@@ -190,19 +190,19 @@ void (^downloadReceiveData)(id<IDDownload>) = ^(id<IDDownload> downloadOperation
                 NSDate *currentDate = [NSDate date];
                 
                 const NSTimeInterval diffTimeInterval = [currentDate timeIntervalSinceDate:startDate];
-                
                 const NSTimeInterval resultTime = diffTimeInterval * otherMB;
                 
-                NSDate *futureDate = [currentDate dateByAddingTimeInterval:resultTime];
-                NSLog(@"future date: %@", [futureDate descriptionWithLocale:[NSLocale systemLocale]]);
+                static NSInteger const secInMinute = 60;
+                static NSInteger const minInHour = 60;
+                static NSInteger const secInHour = 3600;
                 
-                NSDictionary *futureDateDictionary = timeWithDate(futureDate);
+                NSInteger ti = (NSInteger)resultTime;
+                NSInteger seconds = ti % secInMinute;
+                NSInteger minutes = (ti / secInMinute) % minInHour;
+                NSInteger hours = (ti / secInHour);
                 
-                const NSInteger hours = [[futureDateDictionary objectForKey:kHours] integerValue];
-                const NSInteger minutes = [[futureDateDictionary objectForKey:kMinutes] integerValue];
-                const NSInteger seconds = [[futureDateDictionary objectForKey:kSeconds] integerValue];
-                
-                downloadContext.fullTime = [NSString stringWithFormat:@"%i:%i:%i", hours, minutes, seconds];
+                NSDictionary *timeDictionary = @{kHours:@(hours), kMinutes:@(minutes), kSeconds:@(seconds)};
+                downloadContext.fullTime = timeStringWithDictionary(timeDictionary);
                 NSLog(@"time: %@", downloadContext.fullTime);
             }
         }
@@ -451,23 +451,28 @@ void (^downloadFailed)(id<IDDownload>, NSString *) = ^(id<IDDownload> downloadOp
 
 @implementation IDDownloadContext (Helpers_C_Functions)
 
-// Method get date dictionary with NSDate object
-NSDictionary *timeWithDate(NSDate *date)
+// Method get time as string with dictionary. String returning in autoreleasepool.
+NSString *timeStringWithDictionary(NSDictionary *timeDictionary)
 {
-    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-
-    NSDateComponents *dateComponents = [gregorian components:(NSHourCalendarUnit  | NSMinuteCalendarUnit | NSSecondCalendarUnit) fromDate:date];
+    NSString *timeString = @"";
     
-    const NSInteger hour = [dateComponents hour];
-    const NSInteger minute = [dateComponents minute];
-    const NSInteger second = [dateComponents second];
+    if ([timeDictionary count])
+    {
+        const NSUInteger hours = [[timeDictionary objectForKey:kHours] unsignedIntegerValue];
+        const NSUInteger minutes = [[timeDictionary objectForKey:kMinutes] unsignedIntegerValue];
+        const NSUInteger seconds = [[timeDictionary objectForKey:kSeconds] unsignedIntegerValue];
+        
+        if (hours)
+        {
+            timeString = [NSString stringWithFormat:@"%i:%i:%i", hours, minutes, seconds];
+        }
+        else
+        {
+            timeString = [NSString stringWithFormat:@"%i:%i", minutes, seconds];
+        }
+    }
     
-    [gregorian release];
-    
-    NSString * text = [NSString stringWithFormat:@"%02d:%02d:%02d", hour, minute, second];
-    NSLog(@"date: %@",text);
-    
-    return @{kHours:@(hour), kMinutes:@(minute), kSeconds:@(second)};
+    return timeString;
 }
 
 @end

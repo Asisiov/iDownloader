@@ -74,7 +74,6 @@
     {
         @try
         {
-            NSLog(@"file is %@", [[file class] description]);
             [file writeData:data];
         }
         @catch (NSException *exception)
