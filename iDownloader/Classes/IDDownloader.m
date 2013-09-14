@@ -9,11 +9,16 @@
 #import "IDDownloader.h"
 #import "IDDownloadOperation+IDDownloadOperation_Protected.h"
 
+static const NSUInteger byteRangeSuccessCode = 206;
+
+static NSString *const kRange = @"Range";
+
 @implementation IDDownloader
 
 @synthesize localPathToDownloadFile;
 @synthesize didReceiveData;
 @synthesize didReceiveResponse;
+@synthesize serverSupportPartialContent = serverSupportPartialContent;
 
 #pragma mark Implementation Initialization Methods
 
@@ -58,30 +63,39 @@
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
-    NSLog(@"%s", __FUNCTION__);
-    
     if (response.expectedContentLength > 0)
     {
+        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+        serverSupportPartialContent = ([httpResponse statusCode] == byteRangeSuccessCode);
+        
         if (_currentQueue)
         {
+            if (!localPathToDownloadFile)
+            {
+                IDDownloadContext *downloadContext = contextObject;
+                self.localPathToDownloadFile = downloadContext.destPath;
+            }
+            
+            NSLog(@"create file");
+            
+            if (!file)
+            {
+                file = [[IDFile alloc] initWithFullPath:localPathToDownloadFile];
+                [file open];
+            }
+            
             dispatch_async(_currentQueue, ^
             {
-                if (!localPathToDownloadFile)
+#warning if change 'kExcpectedLength' property after paused the should be change a logic 'procent calculating'. That should be change after add a logic 'check resource' if need to.
+                if (![userData objectForKey:kExcpectedLength])
                 {
-                    IDDownloadContext *downloadContext = contextObject;
-                    self.localPathToDownloadFile = downloadContext.destPath;
+                    [userData setObject:[NSNumber numberWithLongLong:response.expectedContentLength] forKey:kExcpectedLength];
                 }
-                
-                [userData setObject:[NSNumber numberWithLongLong:response.expectedContentLength] forKey:kExcpectedLength];
                 
                 if (didReceiveResponse)
                 {
                     didReceiveResponse(self);
                 }
-                
-                NSLog(@"create file");
-                file = [[IDFile alloc] initWithFullPath:localPathToDownloadFile];
-                [file open];
             });
         }
     }
@@ -91,29 +105,25 @@
 {
     if (_currentQueue)
     {
-        dispatch_group_t group = dispatch_group_create();
-        
-        if (group)
+        if (!self.isPaused)
         {
-            dispatch_group_async(group, dispatch_get_current_queue(), ^
+            [file writeData:data];
+            
+            IDDownloadContext *downloadContext = contextObject;
+            downloadContext.downloadedBytes = [file size];
+        }
+        
+        if (!self.isPaused)
+        {
+            dispatch_async(_currentQueue, ^
             {
-//                [file writeData:data];
-            });
-
-            dispatch_group_async(group, _currentQueue, ^
-            {
-                [file writeData:data];
-                
-                IDDownloadContext *downloadContext = contextObject;
-                downloadContext.downloadedBytes = [file size];
-                
                 [userData setObject:[NSNumber numberWithUnsignedInteger:[data length]] forKey:kLastDownloadedBytesLength];
                 
-                didReceiveData(self);
+                if (didReceiveData)
+                {
+                    didReceiveData(self);
+                }
             });
-            
-            dispatch_group_wait(group, DISPATCH_TIME_FOREVER);
-            dispatch_release(group);
         }
     }
 }
@@ -122,7 +132,12 @@
 {
     if (_currentQueue)
     {
-        [file close];
+        if (!self.isPaused)
+        {
+            #warning That should be change after add logic 'check resource'. If file close and the open after pause then file get wrong file size.
+
+            [file close];
+        }
         
         if (!contextObject.isCanceled)
         {
@@ -139,6 +154,8 @@
 {
     if (_currentQueue)
     {
+        [file close];
+        
         dispatch_async(_currentQueue, ^
         {
             if (self.failedBlock)
@@ -179,8 +196,12 @@
 // Method finishing operation. You should be override this method.
 - (void)_finish
 {
+    
     IDDownloadContext *downloadContext = contextObject;
-    [downloadContext setValue:[NSNumber numberWithBool:YES] forKey:@"isFinished"];    
+    [downloadContext setValue:[NSNumber numberWithBool:YES] forKey:@"isFinished"];
+    NSLog(@"downloaded bytes: %li", downloadContext.downloadedBytes);
+    
+    NSLog(@"%@", [userData description]);
 }
 
 // Method canceling operation. You should be override this method.
@@ -198,6 +219,12 @@
     
     IDDownloadContext *downloadContext = contextObject;
     [downloadContext setValue:[NSNumber numberWithBool:YES] forKey:@"isPaused"];
+    
+    if (serverSupportPartialContent)
+    {
+        const unsigned long long fileSize = [file size];
+        [userData setObject:[NSString stringWithFormat:@"bytes=%lli-", fileSize] forKey:@"Range"];
+    }
 }
 
 //// Method resuming operation. You should be override this method.
@@ -218,7 +245,17 @@
         dispatch_queue_t globalQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
 
         NSURL *reqURL = [NSURL URLWithString:contextObject.url];
-        __block NSURLRequest *request = [[NSURLRequest alloc] initWithURL:reqURL cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:30];
+        __block NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:reqURL cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:30];
+        
+        NSString *rangeHeader = [userData objectForKey:kRange];
+        
+        if (!rangeHeader)
+        {
+            // default value
+            rangeHeader = @"bytes=0-";
+        }
+        
+        [request setValue:rangeHeader forHTTPHeaderField:kRange];
 
         dispatch_async(globalQueue, ^
         {

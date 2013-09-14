@@ -24,6 +24,10 @@ static NSString *const kLastDownloadedBytesLength   =   @"kLastDownloadedBytesLe
 @protected
     IDFile *file;
     
+#warning Initialization of this flag need make out this class. That sould change after add\
+'check internet resource' logic.
+    BOOL serverSupportPartialContent;
+    
 @protected
     NSURLConnection *_connection;
 }
@@ -32,6 +36,8 @@ static NSString *const kLastDownloadedBytesLength   =   @"kLastDownloadedBytesLe
 /// @name Settings / Getters
 /// ---------------------------------------------------------------------------------------------------
 
+/** Return 'YES' if server support partritial content. */
+@property (nonatomic, assign) BOOL serverSupportPartialContent;
 
 /** File path when download file. */
 @property (nonatomic, copy) NSString *localPathToDownloadFile;

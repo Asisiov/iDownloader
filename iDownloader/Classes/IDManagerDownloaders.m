@@ -11,12 +11,12 @@
 #import "IDDownloadOperation+IDDownloadOperation_Protected.h"
 #import "IDDownloaderBuilder.h"
 
-@interface IDDownloadContext (Helpers_C_Functions)
-
-// Method get time as string with dictionary. String returning in autoreleasepool.
-NSString *timeStringWithDictionary(NSDictionary *timeDictionary);
-
-@end
+//@interface IDDownloadContext (Helpers_C_Functions)
+//
+//// Method get time as string with dictionary. String returning in autoreleasepool.
+//NSString *timeStringWithDictionary(NSDictionary *timeDictionary);
+//
+//@end
 
 @interface IDManagerDownloaders (Private)
 
@@ -28,8 +28,6 @@ NSString *timeStringWithDictionary(NSDictionary *timeDictionary);
 
 @end
 
-@implementation IDManagerDownloaders
-
 #define CONVERT_BYTES_COEFICIENT 1000000
 
 static NSString *const kManager = @"Manager";
@@ -37,6 +35,15 @@ static NSString *const kManager = @"Manager";
 static NSString *const kHours   = @"kHours";
 static NSString *const kMinutes = @"kMinutes";
 static NSString *const kSeconds = @"kSeconds";
+
+@implementation IDManagerDownloaders
+
+@synthesize operationFinishingBlock;
+@synthesize operationCancelingBlock;
+@synthesize operationStartingBlock;
+@synthesize operationPausingBlock;
+@synthesize operationResumingBlock;
+@synthesize operationFailedBlock;
 
 #pragma mark Implementation Initialization Methods
 
@@ -66,6 +73,13 @@ static NSString *const kSeconds = @"kSeconds";
 
 - (void)dealloc
 {
+    self.operationFinishingBlock = nil;
+    self.operationCancelingBlock = nil;
+    self.operationStartingBlock = nil;
+    self.operationPausingBlock = nil;
+    self.operationResumingBlock = nil;
+    self.operationFailedBlock = nil;
+    
     [builder release];
     [operations release];
     [super dealloc];
@@ -102,6 +116,11 @@ void (^downloadStart)(id<IDDownload>) = ^(id<IDDownload> downloadOperation)
         if (manager)
         {
             NSLog(@"start %@ oparation", downloader.name);
+            
+            if(manager.operationStartingBlock)
+            {
+                manager.operationStartingBlock(downloader);
+            }
         }
     }
 };
@@ -116,6 +135,12 @@ void (^downloadCancel)(id<IDDownload>) = ^(id<IDDownload> downloadOperation)
         if (manager)
         {
             NSLog(@"cancel %@ oparation", downloader.name);
+            
+            if(manager.operationCancelingBlock)
+            {
+                manager.operationCancelingBlock(downloader);
+            }
+            
             removeOperationWithQueueBlock(downloader);
         }
     }
@@ -131,6 +156,11 @@ void (^downloadPause)(id<IDDownload>) = ^(id<IDDownload> downloadOperation)
         if (manager)
         {
             NSLog(@"pause %@ oparation", downloader.name);
+            
+            if(manager.operationPausingBlock)
+            {
+                manager.operationPausingBlock(downloader);
+            }
         }
     }
 };
@@ -145,6 +175,11 @@ void (^downloadResume)(id<IDDownload>) = ^(id<IDDownload> downloadOperation)
         if (manager)
         {
             NSLog(@"resume %@ oparation", downloader.name);
+            
+            if(manager.operationResumingBlock)
+            {
+                manager.operationResumingBlock(downloader);
+            }
         }
     }
 };
@@ -158,6 +193,11 @@ void (^downloadFinish)(id<IDDownload>) = ^(id<IDDownload> downloadOperation)
         
         if (manager)
         {
+            if(manager.operationFinishingBlock)
+            {
+                manager.operationFinishingBlock(downloader);
+            }
+                
             removeOperationWithQueueBlock(downloader);
         }
     }
@@ -180,8 +220,7 @@ void (^downloadReceiveData)(id<IDDownload>) = ^(id<IDDownload> downloadOperation
             
             // calculate process complete in procents
             downloadContext.stateLoadingInProcent = (long)floor((double)(downloaded_mb * MAX_PROCENT / full_size_mb));//downloaded_mb * MAX_PROCENT / full_size_mb;
-            
-//            NSLog(@"downloaded mb: %f", downloaded_mb);
+
 //            NSLog(@"full size: %@", downloadContext.fullSizeInMB);
             NSLog(@"procent: %li", downloadContext.stateLoadingInProcent);
             
@@ -240,6 +279,11 @@ void (^downloadFailed)(id<IDDownload>, NSString *) = ^(id<IDDownload> downloadOp
         if (manager)
         {
             NSLog(@"failed %@ oparation with error:\n%@", downloader.name, error);
+
+            if(manager.operationFailedBlock)
+            {
+                manager.operationFailedBlock(downloader, error);
+            }
         }
     }
 };
@@ -454,30 +498,30 @@ void (^downloadFailed)(id<IDDownload>, NSString *) = ^(id<IDDownload> downloadOp
 
 @end
 
-@implementation IDDownloadContext (Helpers_C_Functions)
-
-// Method get time as string with dictionary. String returning in autoreleasepool.
-NSString *timeStringWithDictionary(NSDictionary *timeDictionary)
-{
-    NSString *timeString = @"";
-    
-    if ([timeDictionary count])
-    {
-        const NSUInteger hours = [[timeDictionary objectForKey:kHours] unsignedIntegerValue];
-        const NSUInteger minutes = [[timeDictionary objectForKey:kMinutes] unsignedIntegerValue];
-        const NSUInteger seconds = [[timeDictionary objectForKey:kSeconds] unsignedIntegerValue];
-        
-        if (hours)
-        {
-            timeString = [NSString stringWithFormat:@"%i:%i:%i", hours, minutes, seconds];
-        }
-        else
-        {
-            timeString = [NSString stringWithFormat:@"%i:%i", minutes, seconds];
-        }
-    }
-    
-    return timeString;
-}
-
-@end
+//@implementation IDDownloadContext (Helpers_C_Functions)
+//
+//// Method get time as string with dictionary. String returning in autoreleasepool.
+//NSString *timeStringWithDictionary(NSDictionary *timeDictionary)
+//{
+//    NSString *timeString = @"";
+//    
+//    if ([timeDictionary count])
+//    {
+//        const NSUInteger hours = [[timeDictionary objectForKey:kHours] unsignedIntegerValue];
+//        const NSUInteger minutes = [[timeDictionary objectForKey:kMinutes] unsignedIntegerValue];
+//        const NSUInteger seconds = [[timeDictionary objectForKey:kSeconds] unsignedIntegerValue];
+//        
+//        if (hours)
+//        {
+//            timeString = [NSString stringWithFormat:@"%i:%i:%i", hours, minutes, seconds];
+//        }
+//        else
+//        {
+//            timeString = [NSString stringWithFormat:@"%i:%i", minutes, seconds];
+//        }
+//    }
+//    
+//    return timeString;
+//}
+//
+//@end

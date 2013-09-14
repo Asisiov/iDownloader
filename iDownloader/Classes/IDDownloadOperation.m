@@ -137,6 +137,9 @@
         {
             @autoreleasepool
             {
+                isFinished = YES;
+                isExecuting = NO;
+                
                 [self _finish];
                 
                 if (finishingBlock)
@@ -144,9 +147,6 @@
                     finishingBlock(self);
                 }
             }
-            
-            isFinished = YES;
-            isExecuting = NO;
         });
     }
 }
@@ -160,6 +160,9 @@
         {
             @autoreleasepool
             {
+                isExecuting = NO;
+                isCanceled = YES;
+                
                 if (cancelingBlock)
                 {
                     cancelingBlock(self);
@@ -167,9 +170,6 @@
                 
                 [self _cancel];
             }
-            
-            isExecuting = NO;
-            isCanceled = YES;
         });
     }
 }
@@ -183,16 +183,16 @@
         {
             @autoreleasepool
             {
+                isPaused = YES;
+                isExecuting = NO;
+                
+                [self _pause];
+                
                 if (pausingBlock)
                 {
                     pausingBlock(self);
                 }
-                
-                [self _pause];
             }
-            
-            isPaused = YES;
-            isExecuting = NO;
         });
     }
 }
@@ -211,10 +211,10 @@
                     resumingBlock(self);
                 }
                 
-                [self _resume];
-                
                 isPaused = NO;
                 isExecuting = YES;
+                
+                [self _resume];
             }
         });
     }

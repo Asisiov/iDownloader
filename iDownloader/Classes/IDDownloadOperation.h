@@ -72,7 +72,7 @@ typedef void (^IDDownloadFailedBlock)(id<IDDownload>, NSString *);
 /// @name Download blocks for events
 /// -------------------------------------------------------------------------------------------------------------------------------------------------------
 
-/** The canceledBlock invoke when operation finish download. Given object to bloack is current operation. */
+/** The finishingBlock invoke when operation finish download. Given object to bloack is current operation. */
 @property (nonatomic, copy) IDDownloadBlock finishingBlock;
 
 /** The cancelingBlock invoke when operation cancling download. Given object to bloack is current operation. */
@@ -87,7 +87,7 @@ typedef void (^IDDownloadFailedBlock)(id<IDDownload>, NSString *);
 /** The resumingBlock invoke when operation resuming download. Given object to bloack is current operation. */
 @property (nonatomic, copy) IDDownloadBlock resumingBlock;
 
-/** The resumingBlock invoke when there is an error loading. Given object to bloack is current operation. */
+/** The failedBlock invoke when there is an error loading. Given object to bloack is current operation. */
 @property (nonatomic, copy) IDDownloadFailedBlock failedBlock;
 
 /// -------------------------------------------------------------------------------------------------------------------------------------------------------

@@ -22,6 +22,29 @@
     IDDownloaderBuilder *builder;
 }
 
+/// -------------------------------------------------------------------------------------------------------------------------------------------------------
+/// @name Download blocks for events
+/// -------------------------------------------------------------------------------------------------------------------------------------------------------
+
+/** The operationFinishingBlock invoke when operation finish download. Given object to bloack is current operation. */
+@property (nonatomic, copy) IDDownloadBlock operationFinishingBlock;
+
+/** The operationCancelingBlock invoke when operation cancling download. Given object to bloack is current operation. */
+@property (nonatomic, copy) IDDownloadBlock operationCancelingBlock;
+
+/** The operationStartingBlock invoke when operation starting download. Given object to bloack is current operation. */
+@property (nonatomic, copy) IDDownloadBlock operationStartingBlock;
+
+/** The operationPausingBlock invoke when operation pausing download. Given object to bloack is current operation. */
+@property (nonatomic, copy) IDDownloadBlock operationPausingBlock;
+
+/** The operationResumingBlock invoke when operation resuming download. Given object to bloack is current operation. */
+@property (nonatomic, copy) IDDownloadBlock operationResumingBlock;
+
+/** The failedBlock invoke when there is an error loading. Given object to bloack is current operation. */
+@property (nonatomic, copy) IDDownloadFailedBlock operationFailedBlock;
+
+
 /// ---------------------------------------------------------
 /// @name Business Logic Methods
 /// ---------------------------------------------------------

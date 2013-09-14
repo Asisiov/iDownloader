@@ -8,6 +8,7 @@
 
 #import "IDViewController.h"
 #import "IDDownloadContext.h"
+#import "IDDownloader.h"
 
 @interface IDViewController ()
 
@@ -32,6 +33,30 @@
 	// Do any additional setup after loading the view, typically from a nib.
     
     downloadItems = [[NSMutableArray alloc] init];
+    
+    IDDownloadBlock managerFileBlock = ^(id<IDDownload> downloadOperation)
+    {
+        IDDownloader *downloaderOperation = (IDDownloader *)downloadOperation;
+        
+        if (downloaderOperation)
+        {
+            NSFileManager *fileManager = [[NSFileManager alloc] init];
+            
+            if ([fileManager fileExistsAtPath:downloaderOperation.localPathToDownloadFile])
+            {
+                [fileManager removeItemAtPath:downloaderOperation.localPathToDownloadFile error:nil];
+            }
+            
+            [fileManager release];
+        }
+    };
+    
+    downloader.operationCancelingBlock = managerFileBlock;
+    downloader.operationFailedBlock = ^(id<IDDownload> downloadOperation, NSString *error)
+    {
+        NSLog(@"Error: %@", error);
+        downloader.operationCancelingBlock(downloadOperation);
+    };
 }
 
 - (void)didReceiveMemoryWarning
