@@ -58,6 +58,8 @@
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
+    NSLog(@"%s", __FUNCTION__);
+    
     if (response.expectedContentLength > 0)
     {
         if (_currentQueue)
@@ -95,11 +97,13 @@
         {
             dispatch_group_async(group, dispatch_get_current_queue(), ^
             {
-                [file writeData:data];
+//                [file writeData:data];
             });
 
             dispatch_group_async(group, _currentQueue, ^
             {
+                [file writeData:data];
+                
                 IDDownloadContext *downloadContext = contextObject;
                 downloadContext.downloadedBytes = [file size];
                 
@@ -211,7 +215,7 @@
         dispatch_async(globalQueue, ^
         {
             NSURL *reqURL = [NSURL URLWithString:contextObject.url];
-            NSURLRequest *reques = [NSURLRequest requestWithURL:reqURL cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60];
+            NSURLRequest *reques = [NSURLRequest requestWithURL:reqURL cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:30];
             _connection = [[NSURLConnection alloc] initWithRequest:reques delegate:self];
             [[NSRunLoop currentRunLoop] run];
         });

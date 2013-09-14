@@ -45,9 +45,25 @@
 - (IBAction)download:(id)sender
 {
     IDDownloadContext *context = [[IDDownloadContext alloc] init];
-    context.destPath = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"MoviFile.avi"];
-    context.name = @"MoviFile.avi";
-    context.url = @"http://localhost/OSXDownloaderServes/Novaya.kamasutra.21.veka.Sovremennaya.lyubov.2.2004.DVDRip.R.G.Mega.Best.avi";
+//    context.destPath = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"163d3dac41.mp4"];
+//    context.name = @"163d3dac41.mp4";
+//    context.url = @"http://localhost:8888/DownloaderService/163d3dac41.360.mp4";
+    
+//    Learn English ESL Irregular Verbs Grammar Rap Song! StickStuckStuck with Fluency MC!.mp4
+    
+//    {
+//        context.destPath = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"Learn English ESL Irregular Verbs Grammar Rap Song! StickStuckStuck with Fluency MC!.mp4"];
+//        context.name = @"Learn English ESL Irregular Verbs Grammar Rap Song! StickStuckStuck with Fluency MC!.mp4";
+//        context.url = @"http://localhost:8888/DownloaderService/Learn%20English%20ESL%20Irregular%20Verbs%20Grammar%20Rap%20Song!%20StickStuckStuck%20with%20Fluency%20MC!.mp4";
+//    }
+    
+//    С ЭТИМ НАДО КОНЧАТЬ - Жак Фреско - Проект Венера.mp4
+    
+    {
+        context.destPath = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"С ЭТИМ НАДО КОНЧАТЬ - Жак Фреско - Проект Венера.mp4"];
+        context.name = @"С ЭТИМ НАДО КОНЧАТЬ - Жак Фреско - Проект Венера.mp4";
+        context.url = @"http://localhost:8888/DownloaderService/%D0%A1%20%D0%AD%D0%A2%D0%98%D0%9C%20%D0%9D%D0%90%D0%94%D0%9E%20%D0%9A%D0%9E%D0%9D%D0%A7%D0%90%D0%A2%D0%AC%20-%20%D0%96%D0%B0%D0%BA%20%D0%A4%D1%80%D0%B5%D1%81%D0%BA%D0%BE%20-%20%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82%20%D0%92%D0%B5%D0%BD%D0%B5%D1%80%D0%B0.mp4";
+    }
     
     if (!downloader.isStarted || !downloader.isExecuting)
     {

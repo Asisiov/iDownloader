@@ -173,38 +173,43 @@ void (^downloadReceiveData)(id<IDDownload>) = ^(id<IDDownload> downloadOperation
         if (downloadContext.sizeInBytes != NSURLResponseUnknownLength)
         {
             // calculate downloaded data in MB
-            downloadContext.sizeInMB = [NSString stringWithFormat:@"%f MB", (float)(downloadContext.downloadedBytes / CONVERT_BYTES_COEFICIENT)];
+            const CGFloat downloaded_mb = (CGFloat)(downloadContext.downloadedBytes / CONVERT_BYTES_COEFICIENT);
+            const CGFloat full_size_mb = (CGFloat)(downloadContext.sizeInBytes / CONVERT_BYTES_COEFICIENT);
             
-            const float downloaded_mb = (float)(downloadContext.downloadedBytes / CONVERT_BYTES_COEFICIENT);
-            const float full_size_mb = (float)(downloadContext.sizeInBytes / CONVERT_BYTES_COEFICIENT);
+            downloadContext.sizeInMB = [NSString stringWithFormat:@"%f MB", downloaded_mb];
             
             // calculate process complete in procents
-            downloadContext.stateLoadingInProcent = downloaded_mb * MAX_PROCENT / full_size_mb;
+            downloadContext.stateLoadingInProcent = (long)floor((double)(downloaded_mb * MAX_PROCENT / full_size_mb));//downloaded_mb * MAX_PROCENT / full_size_mb;
+            
+//            NSLog(@"downloaded mb: %f", downloaded_mb);
+//            NSLog(@"full size: %@", downloadContext.fullSizeInMB);
+            NSLog(@"procent: %li", downloadContext.stateLoadingInProcent);
             
             //calculate full time
-            if (downloadContext.stateLoadingInProcent > 0)
-            {
-                const float otherMB = full_size_mb - downloaded_mb;
-                
-                NSDate *startDate = [downloader.userData objectForKey:kStartDate];
-                NSDate *currentDate = [NSDate date];
-                
-                const NSTimeInterval diffTimeInterval = [currentDate timeIntervalSinceDate:startDate];
-                const NSTimeInterval resultTime = diffTimeInterval * otherMB;
-                
-                static NSInteger const secInMinute = 60;
-                static NSInteger const minInHour = 60;
-                static NSInteger const secInHour = 3600;
-                
-                NSInteger ti = (NSInteger)resultTime;
-                NSInteger seconds = ti % secInMinute;
-                NSInteger minutes = (ti / secInMinute) % minInHour;
-                NSInteger hours = (ti / secInHour);
-                
-                NSDictionary *timeDictionary = @{kHours:@(hours), kMinutes:@(minutes), kSeconds:@(seconds)};
-                downloadContext.fullTime = timeStringWithDictionary(timeDictionary);
-                NSLog(@"time: %@", downloadContext.fullTime);
-            }
+#warning wrong - don't work
+//            if (downloadContext.stateLoadingInProcent > 0)
+//            {
+//                const float otherMB = full_size_mb - downloaded_mb;
+//                
+//                NSDate *startDate = [downloader.userData objectForKey:kStartDate];
+//                NSDate *currentDate = [NSDate date];
+//                
+//                const NSTimeInterval diffTimeInterval = [currentDate timeIntervalSinceDate:startDate];
+//                const NSTimeInterval resultTime = diffTimeInterval * otherMB;
+//                
+//                static NSInteger const secInMinute = 60;
+//                static NSInteger const minInHour = 60;
+//                static NSInteger const secInHour = 3600;
+//                
+//                NSInteger ti = (NSInteger)resultTime;
+//                NSInteger seconds = ti % secInMinute;
+//                NSInteger minutes = (ti / secInMinute) % minInHour;
+//                NSInteger hours = (ti / secInHour);
+//                
+//                NSDictionary *timeDictionary = @{kHours:@(hours), kMinutes:@(minutes), kSeconds:@(seconds)};
+//                downloadContext.fullTime = timeStringWithDictionary(timeDictionary);
+//                NSLog(@"time: %@", downloadContext.fullTime);
+//            }
         }
     }
 };
@@ -220,7 +225,7 @@ void (^downloadReceiveResponse)(id<IDDownload>) = ^(id<IDDownload> downloadOpera
         {
             IDDownloadContext *downloadContext = downloader.context;
             downloadContext.sizeInBytes = fullSize;
-            downloadContext.fullSizeInMB = [NSString stringWithFormat:@"%i MB", (int)(fullSize / CONVERT_BYTES_COEFICIENT)];
+            downloadContext.fullSizeInMB = [NSString stringWithFormat:@"%f.3 MB", (CGFloat)(fullSize / CONVERT_BYTES_COEFICIENT)];
         }
     }
 };
