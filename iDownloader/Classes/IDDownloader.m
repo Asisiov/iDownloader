@@ -194,6 +194,8 @@
 // Method pausing operation. You should be override this method.
 - (void)_pause
 {
+    [_connection cancel];
+    
     IDDownloadContext *downloadContext = contextObject;
     [downloadContext setValue:[NSNumber numberWithBool:YES] forKey:@"isPaused"];
 }
@@ -203,6 +205,9 @@
 {
     IDDownloadContext *downloadContext = contextObject;
     [downloadContext setValue:[NSNumber numberWithBool:YES] forKey:@"isStarted"];
+    
+    // start download
+    [self _main];
 }
 
 // Method main operation. You should be override this method.
@@ -211,13 +216,17 @@
     if (contextObject.url)
     {
         dispatch_queue_t globalQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-        
+
+        NSURL *reqURL = [NSURL URLWithString:contextObject.url];
+        __block NSURLRequest *request = [[NSURLRequest alloc] initWithURL:reqURL cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:30];
+
         dispatch_async(globalQueue, ^
         {
-            NSURL *reqURL = [NSURL URLWithString:contextObject.url];
-            NSURLRequest *reques = [NSURLRequest requestWithURL:reqURL cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:30];
-            _connection = [[NSURLConnection alloc] initWithRequest:reques delegate:self];
+            _connection = [[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:YES];
+            [request release];
+            
             [[NSRunLoop currentRunLoop] run];
+            [_connection start];
         });
     }
 }

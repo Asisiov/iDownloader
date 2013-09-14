@@ -179,10 +179,7 @@
 {
     if (!isPaused && isExecuting && _currentQueue)
     {
-//        dispatch_suspend(_currentQueue);
-        dispatch_group_t group = dispatch_group_create();
-        
-        dispatch_group_async(group, _currentQueue, ^
+        dispatch_async(_currentQueue, ^
         {
             @autoreleasepool
             {
@@ -195,13 +192,8 @@
             }
             
             isPaused = YES;
+            isExecuting = NO;
         });
-        
-        dispatch_group_wait(group, DISPATCH_TIME_FOREVER);
-        
-        dispatch_suspend(_currentQueue);
-        
-        dispatch_release(group);
     }
 }
 
@@ -210,19 +202,21 @@
 {
     if (isPaused && _currentQueue)
     {
-        @autoreleasepool
+        dispatch_async(_currentQueue, ^
         {
-            if (resumingBlock)
+            @autoreleasepool
             {
-                resumingBlock(self);
+                if (resumingBlock)
+                {
+                    resumingBlock(self);
+                }
+                
+                [self _resume];
+                
+                isPaused = NO;
+                isExecuting = YES;
             }
-            
-            [self _resume];
-        }
-        
-        dispatch_resume(_currentQueue);
-        
-        isPaused = NO;
+        });
     }
 }
 
@@ -250,7 +244,7 @@
     {
         @autoreleasepool
         {
-            NSString *queueName = [[NSString stringWithFormat:@"%@.operation.serial.queue", name] uppercaseString];
+            NSString *queueName = [[NSString stringWithFormat:@"%@.operation.serial.queue", name] lowercaseString];
             _currentQueue = dispatch_queue_create([queueName UTF8String], 0);
         }
     }
