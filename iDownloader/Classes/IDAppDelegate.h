@@ -8,12 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@class IDViewController;
+@class IDManagerViewController;
 
 @interface IDAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 
-@property (strong, nonatomic) IDViewController *viewController;
+@property (strong, nonatomic) IDManagerViewController *viewController;
 
 @end

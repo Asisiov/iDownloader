@@ -8,7 +8,7 @@
 
 #import "IDAppDelegate.h"
 
-#import "IDViewController.h"
+#import "IDManagerViewController.h"
 
 @implementation IDAppDelegate
 
@@ -25,9 +25,9 @@
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
     // Override point for customization after application launch.
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        self.viewController = [[[IDViewController alloc] initWithNibName:@"IDViewController_iPhone" bundle:nil] autorelease];
+        self.viewController = [[[IDManagerViewController alloc] initWithNibName:@"IDManagerViewController_iPhone" bundle:nil] autorelease];
     } else {
-        self.viewController = [[[IDViewController alloc] initWithNibName:@"IDViewController_iPad" bundle:nil] autorelease];
+        self.viewController = [[[IDManagerViewController alloc] initWithNibName:@"IDManagerViewController_iPad" bundle:nil] autorelease];
     }
     self.window.rootViewController = self.viewController;
     [self.window makeKeyAndVisible];
