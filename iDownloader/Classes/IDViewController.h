@@ -8,20 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@class IDViewController;
-
-@protocol IDViewControllerDelegate <NSObject>
-
-// The type of separete block for move view
-typedef void (^IDMoveViewController)(IDViewController *viewController);
-
-/**
- Methods call wen user moving controllers all take by 'Move' button
- @param moveBlock block with code for move cview controllers
- */
-- (void)moveViewControllerToRight:(IDMoveViewController)moveBlock;
-
-@end
+typedef void(^MoveController)(void);
 
 /**
  IDViewController is root class for view controlers which represent for users interaction with app.
@@ -35,7 +22,6 @@ typedef void (^IDMoveViewController)(IDViewController *viewController);
     
 //Data atributtes
 @protected
-    id<IDViewControllerDelegate> delegate;
     NSArray *dataSource;
 }
 
@@ -44,23 +30,13 @@ typedef void (^IDMoveViewController)(IDViewController *viewController);
 /// ----------------------------------------------------------------------------------------------
 
 /**
- Set/Get delegate.
- */
-@property (nonatomic, assign) id<IDViewControllerDelegate> delegate;
-
-/**
  Set/Get data source.
  */
 @property (nonatomic, retain) NSArray *dataSource;
 
-/// ----------------------------------------------------------------------------------------------
-/// @name IB Actions Methods
-/// ----------------------------------------------------------------------------------------------
-
 /**
- Methods is selector for 'Move' button.
- @param sender 'Move' button
+ Set/Get block for move controller
  */
-- (IBAction)moveController:(id)sender;
+@property (nonatomic, copy) MoveController moveControllerBlock;
 
 @end

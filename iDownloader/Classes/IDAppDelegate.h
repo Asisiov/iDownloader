@@ -16,4 +16,6 @@
 
 @property (strong, nonatomic) IDManagerViewController *viewController;
 
+@property (strong, nonatomic) UINavigationController *navViewController;
+
 @end

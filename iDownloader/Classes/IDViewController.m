@@ -7,15 +7,19 @@
 //
 
 #import "IDViewController.h"
+#import "IDBarButtonItem.h"
 
 @interface IDViewController ()
+
+// Method move mainViewController
+- (void)moveController:(id)sender;
 
 @end
 
 @implementation IDViewController
 
-@synthesize delegate = delegate;
 @synthesize dataSource = dataSource;
+@synthesize moveControllerBlock;
 
 #pragma mark Implementation Initialization Methods
 
@@ -33,8 +37,8 @@
 
 - (void)dealloc
 {
-    self.delegate = nil;
     self.dataSource = nil;
+    self.moveControllerBlock = nil;
     [super dealloc];
 }
 
@@ -46,6 +50,16 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    
+    // Create interface
+    IDBarButtonItem *leftBarItem = [[IDBarButtonItem alloc] initWithTarget:self withAction:@selector(moveController:) withSize:CGSizeMake(36.f, 36.f)];
+    
+    NSLog(@"%@", [self.navigationItem description]);
+    
+    self.navigationItem.leftBarButtonItem = leftBarItem;
+    //    [leftBarItem release];
+    
+    [self.navigationController.view.layer setCornerRadius:10.0f];
 }
 
 - (void)didReceiveMemoryWarning
@@ -75,6 +89,21 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
 
+}
+
+#pragma mark -
+
+#pragma mark Implementation Private Methods
+
+// Method move mainViewController
+- (void)moveController:(id)sender
+{
+    NSLog(@"%s", __FUNCTION__);
+    
+    if (moveControllerBlock)
+    {
+        moveControllerBlock();
+    }
 }
 
 #pragma mark -

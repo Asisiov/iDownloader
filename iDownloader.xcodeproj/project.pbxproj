@@ -40,6 +40,10 @@
 		88A42FA8178774E9009FB554 /* IDAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 88A42FA4178774E9009FB554 /* IDAppDelegate.m */; };
 		88A42FA9178774E9009FB554 /* IDManagerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88A42FA6178774E9009FB554 /* IDManagerViewController.m */; };
 		88A42FAF1787751B009FB554 /* AppledocSettings.plist in Resources */ = {isa = PBXBuildFile; fileRef = 88A42FAE1787751B009FB554 /* AppledocSettings.plist */; };
+		88C8874417EE0C9000C3447B /* IDBrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88C8874217EE0C9000C3447B /* IDBrowserViewController.m */; };
+		88C8874817EE0D0100C3447B /* IDBrowserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 88C8874617EE0D0100C3447B /* IDBrowserViewController.xib */; };
+		88C8874C17EE168100C3447B /* IDBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 88C8874B17EE168100C3447B /* IDBarButtonItem.m */; };
+		88C8874F17EE17E800C3447B /* IDBarButtonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 88C8874E17EE17E800C3447B /* IDBarButtonView.m */; };
 		88ECD331178820A000B7F287 /* IDDownloadOperation+IDDownloadOperation_Protected.m in Sources */ = {isa = PBXBuildFile; fileRef = 88ECD330178820A000B7F287 /* IDDownloadOperation+IDDownloadOperation_Protected.m */; };
 		88ECD33617882C4D00B7F287 /* IDDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 88ECD33517882C4D00B7F287 /* IDDownloader.m */; };
 		88F3E30017877BC200CD5AE4 /* IDDownloadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 88F3E2FF17877BC200CD5AE4 /* IDDownloadOperation.m */; };
@@ -76,6 +80,13 @@
 		88A42FA5178774E9009FB554 /* IDManagerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDManagerViewController.h; sourceTree = "<group>"; };
 		88A42FA6178774E9009FB554 /* IDManagerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDManagerViewController.m; sourceTree = "<group>"; };
 		88A42FAE1787751B009FB554 /* AppledocSettings.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = AppledocSettings.plist; sourceTree = "<group>"; };
+		88C8874117EE0C9000C3447B /* IDBrowserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDBrowserViewController.h; sourceTree = "<group>"; };
+		88C8874217EE0C9000C3447B /* IDBrowserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDBrowserViewController.m; sourceTree = "<group>"; };
+		88C8874717EE0D0100C3447B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = iDownloader/en.lproj/IDBrowserViewController.xib; sourceTree = SOURCE_ROOT; };
+		88C8874A17EE168100C3447B /* IDBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDBarButtonItem.h; sourceTree = "<group>"; };
+		88C8874B17EE168100C3447B /* IDBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDBarButtonItem.m; sourceTree = "<group>"; };
+		88C8874D17EE17E800C3447B /* IDBarButtonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDBarButtonView.h; sourceTree = "<group>"; };
+		88C8874E17EE17E800C3447B /* IDBarButtonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDBarButtonView.m; sourceTree = "<group>"; };
 		88ECD32F178820A000B7F287 /* IDDownloadOperation+IDDownloadOperation_Protected.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "IDDownloadOperation+IDDownloadOperation_Protected.h"; sourceTree = "<group>"; };
 		88ECD330178820A000B7F287 /* IDDownloadOperation+IDDownloadOperation_Protected.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "IDDownloadOperation+IDDownloadOperation_Protected.m"; sourceTree = "<group>"; };
 		88ECD33417882C4D00B7F287 /* IDDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDDownloader.h; sourceTree = "<group>"; };
@@ -109,10 +120,13 @@
 		88418501178775B400213CCB /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				88C8874917EE166000C3447B /* Views */,
 				88A42FA5178774E9009FB554 /* IDManagerViewController.h */,
 				88A42FA6178774E9009FB554 /* IDManagerViewController.m */,
 				88101BF517E630C800B7A198 /* IDViewController.h */,
 				88101BF617E630C800B7A198 /* IDViewController.m */,
+				88C8874117EE0C9000C3447B /* IDBrowserViewController.h */,
+				88C8874217EE0C9000C3447B /* IDBrowserViewController.m */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -208,8 +222,20 @@
 				88101BF817E635FD00B7A198 /* Plists */,
 				886613A117E47A4B001B7F75 /* IDManagerViewController_iPad.xib */,
 				886613A317E47A4B001B7F75 /* IDManagerViewController_iPhone.xib */,
+				88C8874617EE0D0100C3447B /* IDBrowserViewController.xib */,
 			);
 			path = Resource;
+			sourceTree = "<group>";
+		};
+		88C8874917EE166000C3447B /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				88C8874A17EE168100C3447B /* IDBarButtonItem.h */,
+				88C8874B17EE168100C3447B /* IDBarButtonItem.m */,
+				88C8874D17EE17E800C3447B /* IDBarButtonView.h */,
+				88C8874E17EE17E800C3447B /* IDBarButtonView.m */,
+			);
+			name = Views;
 			sourceTree = "<group>";
 		};
 		88ECD33217882C1800B7F287 /* Root Class */ = {
@@ -313,6 +339,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				88C8874817EE0D0100C3447B /* IDBrowserViewController.xib in Resources */,
 				88A42F87178774B8009FB554 /* InfoPlist.strings in Resources */,
 				886613A617E47A4B001B7F75 /* IDManagerViewController_iPhone.xib in Resources */,
 				886613A517E47A4B001B7F75 /* IDManagerViewController_iPad.xib in Resources */,
@@ -347,6 +374,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				88C8874417EE0C9000C3447B /* IDBrowserViewController.m in Sources */,
 				88A42F89178774B8009FB554 /* main.m in Sources */,
 				88A42FA8178774E9009FB554 /* IDAppDelegate.m in Sources */,
 				88A42FA9178774E9009FB554 /* IDManagerViewController.m in Sources */,
@@ -355,9 +383,11 @@
 				88101BF717E630C800B7A198 /* IDViewController.m in Sources */,
 				88ECD331178820A000B7F287 /* IDDownloadOperation+IDDownloadOperation_Protected.m in Sources */,
 				88ECD33617882C4D00B7F287 /* IDDownloader.m in Sources */,
+				88C8874F17EE17E800C3447B /* IDBarButtonView.m in Sources */,
 				880B0247178862D2005BAD60 /* IDFile.m in Sources */,
 				881382351788B9E900C09E68 /* IDManagerDownloaders.m in Sources */,
 				881382381788C14200C09E68 /* IDDownloaderBuilder.m in Sources */,
+				88C8874C17EE168100C3447B /* IDBarButtonItem.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -394,6 +424,14 @@
 				88A42F86178774B8009FB554 /* en */,
 			);
 			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		88C8874617EE0D0100C3447B /* IDBrowserViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				88C8874717EE0D0100C3447B /* en */,
+			);
+			name = IDBrowserViewController.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

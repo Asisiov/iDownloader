@@ -9,15 +9,39 @@
 #import "IDManagerViewController.h"
 #import "IDDownloadContext.h"
 #import "IDDownloader.h"
+#import "IDViewController.h"
 
-@interface IDManagerViewController (Private)
+@interface IDManagerViewController (IDManagerViewController_ManageViewControllers)
 
 // Method create a new controller
 - (IDViewController *)allocViewControllerByName:(NSString *)controllerName;
 
+// Method set given controller as main controller
+- (void)setCentralViewController:(UIViewController *)centralViewController;
+
+// Method set shadow for given view
+- (void)setShadowForView:(UIView *)view;
+
+// Method set position given UIViewController
+- (void)setPositionViewControllerView:(UIViewController *)viewConroller;
+
+@end
+
+@interface IDManagerViewController (IBActions)
+
+// Method move mainViewController
+- (void)moveController:(id)sender;
+
 @end
 
 @implementation IDManagerViewController
+
+static const CGFloat shift = 255.f;
+static const CGFloat animationDuration = 0.15f;
+static const CGFloat velocity = 840.f;
+
+static const CGFloat MMDrawerDefaultShadowRadius = 10.0f;
+static const  CGFloat MMDrawerDefaultShadowOpacity = 0.8f;
 
 #pragma mark Implementation Initialization Methods
 
@@ -36,6 +60,8 @@
                 viewsList = [[NSDictionary alloc] initWithContentsOfFile:plistPath];
             }
         }
+        
+        isOpenMainController = YES;
     }
     
     return self;
@@ -78,6 +104,8 @@ IDDownloadBlock managerFileBlock = ^(id<IDDownload> downloadOperation)
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     
+    [[UIApplication sharedApplication] setStatusBarHidden:YES];
+    
     downloadItems = [[NSMutableArray alloc] init];
     
     downloader.operationCancelingBlock = managerFileBlock;
@@ -86,12 +114,49 @@ IDDownloadBlock managerFileBlock = ^(id<IDDownload> downloadOperation)
         NSLog(@"Error: %@", error);
         managerFileBlock(downloadOperation);
     };
+    
+    //create UI
+    if ([viewsList count])
+    {
+        IDViewController *centeredController = [self allocViewControllerByName:[viewsList.allValues objectAtIndex:0]];
+        
+        if (centeredController)
+        {
+            [self setCentralViewController:centeredController];
+        }
+    }
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+//    [mainViewController beginAppearanceTransition:YES animated:animated];
+    
+    [[UIApplication sharedApplication] setStatusBarHidden:YES];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    NSIndexPath *path = [NSIndexPath indexPathForRow:0 inSection:0];
+    
+    if (path)
+    {
+        UITableViewCell *cell = [viewsTable cellForRowAtIndexPath:path];
+        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+    }
+}
+
+- (BOOL)prefersStatusBarHidden
+{
+    return YES;
 }
 
 #pragma mark -
@@ -137,6 +202,12 @@ IDDownloadBlock managerFileBlock = ^(id<IDDownload> downloadOperation)
         NSString *controllerName = [viewsList objectForKey:key];
         
         NSLog(@"select: %@", controllerName);
+        
+        if (mainViewController.viewControllers.count > 0)
+        {
+            IDViewController *viewController = mainViewController.viewControllers[0];
+            viewController.moveControllerBlock();
+        }
     }
 }
 
@@ -213,7 +284,9 @@ IDDownloadBlock managerFileBlock = ^(id<IDDownload> downloadOperation)
 
 #pragma mark -
 
-#pragma mark Implementation Private Methods
+@end
+
+@implementation IDManagerViewController (IDManagerViewController_ManageViewControllers)
 
 // Method create a new controller
 - (IDViewController *)allocViewControllerByName:(NSString *)controllerName
@@ -224,9 +297,45 @@ IDDownloadBlock managerFileBlock = ^(id<IDDownload> downloadOperation)
     {
         Class viewControllerClass = NSClassFromString(controllerName);
         
-        if (viewController)
+        if (viewControllerClass)
         {
             viewController = [[viewControllerClass alloc] initWithNibName:controllerName bundle:nil];
+
+            [viewController setMoveControllerBlock:^(void)
+            {
+                if (mainViewController)
+                {
+                    CGRect newFrame = CGRectZero;
+                    CGRect oldFrame = mainViewController.view.frame;
+                    
+                    if (isOpenMainController)
+                    {
+                        newFrame = mainViewController.view.frame;
+                        newFrame.origin.x -= shift;
+                    }
+                    else
+                    {
+                        newFrame = mainViewController.view.frame;
+                        newFrame.origin.x += shift;
+                    }
+                    
+                    [mainViewController beginAppearanceTransition:YES animated:YES];
+                    
+                    const CGFloat distance = ABS(CGRectGetMinX(oldFrame)-newFrame.origin.x);
+                    const NSTimeInterval duration = MAX(distance/ABS(velocity),animationDuration);
+                    
+                    [UIView animateWithDuration:duration delay:0.f options:UIViewAnimationOptionCurveEaseInOut
+                                     animations:^
+                     {
+                         mainViewController.view.frame = newFrame;
+                     }
+                                     completion:^(BOOL finished)
+                     {
+                         isOpenMainController = !isOpenMainController;
+                         [mainViewController endAppearanceTransition];
+                     }];
+                }
+            }];
         }
     }
     @catch (NSException *exception)
@@ -240,6 +349,90 @@ IDDownloadBlock managerFileBlock = ^(id<IDDownload> downloadOperation)
     return viewController;;
 }
 
-#pragma mark -
+// Method set given controller as main controller
+//- (void)setCentralViewController:(IDViewController *)centralViewController
+- (void)setCentralViewController:(UIViewController *)centralViewController
+{
+    if (centralViewController)
+    {
+        if (mainViewController != nil)
+        {
+            [mainViewController beginAppearanceTransition:NO animated:NO];
+            
+            [mainViewController removeFromParentViewController];
+            [mainViewController.view removeFromSuperview];
+            
+            [mainViewController endAppearanceTransition];
+            [mainViewController release];
+        }
+        
+        if (mainViewController == nil)
+        {
+            mainViewController = [[UINavigationController alloc] initWithRootViewController:centralViewController];
+            
+            @autoreleasepool
+            {
+                NSString *controllerName  = NSStringFromClass([centralViewController class]);
+                
+                NSArray *namesArray = [viewsList allKeys];
+                
+                for (NSString *name in namesArray)
+                {
+                    NSString *idName = [viewsList objectForKey:name];
+                    
+                    if ([idName isEqualToString:controllerName])
+                    {
+                        UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(0.f, 0.f, 70.f, 40.f)];
+                        title.backgroundColor = [UIColor clearColor];
+                        title.font = [UIFont boldSystemFontOfSize:34.f];
+                        title.textColor = [UIColor whiteColor];
+                        title.text = @"Browser";
+                        
+                        mainViewController.navigationBar.topItem.titleView = title;
+                        [title release];
+                        
+                        break;
+                    }
+                }
+            }
+        }
+        
+        [mainViewController beginAppearanceTransition:YES animated:NO];
+        
+        [self addChildViewController:mainViewController];
+        [self.view addSubview:mainViewController.view];
+        
+        mainViewController.view.frame = self.view.bounds;
+        mainViewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+        
+        [self setPositionViewControllerView:mainViewController];
+        [self setShadowForView:mainViewController.view];
+        
+        //    [mainViewController beginAppearanceTransition:YES animated:NO];
+        [mainViewController endAppearanceTransition];
+        [mainViewController didMoveToParentViewController:self];
+    }
+}
+
+// Method set shadow for given view
+- (void)setShadowForView:(UIView *)view
+{
+    view.layer.masksToBounds = NO;
+    view.layer.shadowRadius = MMDrawerDefaultShadowRadius;
+    view.layer.shadowOpacity = MMDrawerDefaultShadowOpacity;
+    view.layer.shadowPath = [[UIBezierPath bezierPathWithRect:view.bounds] CGPath];
+}
+
+// Method set position given UIViewController
+- (void)setPositionViewControllerView:(UIViewController *)viewConroller
+{
+    if (viewConroller)
+    {
+        CGRect frame = viewConroller.view.frame;
+        frame.origin.x = isOpenMainController ? shift : 0.f;
+        
+        viewConroller.view.frame = frame;
+    }
+}
 
 @end

@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "IDManagerDownloaders.h"
-#import "IDViewController.h"
 
 /**
  The instance of 'IDManagerViewController' manage all views controllers and incapsulate logic of massenges between they.
@@ -21,12 +20,15 @@
     
 // UIViews
 @protected
-    IDViewController *mainViewController;   //visible (current) controller
+    UINavigationController *mainViewController;   //visible (current) controller
     IBOutlet UITableView *viewsTable;
     
 @private
     NSMutableArray *downloadItems;
     NSDictionary *viewsList;                     //data source for 'viewsTable'
+    
+@private
+    BOOL isOpenMainController;
 }
 
 - (IBAction)download:(id)sender;
