@@ -11,6 +11,7 @@
 #import "IDDownloader.h"
 #import "IDViewController.h"
 
+// Set methods for manage central view controller and allocate view controllers
 @interface IDManagerViewController (IDManagerViewController_ManageViewControllers)
 
 // Method create a new controller
@@ -25,19 +26,21 @@
 // Method set position given UIViewController
 - (void)setPositionViewControllerView:(UIViewController *)viewConroller;
 
+// Method round original x
+CG_INLINE CGFloat roundedOriginXForDrawerConstriants(CGFloat originX);
+
 @end
 
-@interface IDManagerViewController (IBActions)
+@interface IDManagerViewController (UIPanGestureRecognizer)
 
-// Method move mainViewController
-- (void)moveController:(id)sender;
+-(void)panGestureCallback:(UIPanGestureRecognizer *)panGesture;
 
 @end
 
 @implementation IDManagerViewController
 
 static const CGFloat shift = 255.f;
-static const CGFloat animationDuration = 0.15f;
+static const CGFloat animationDuration = 0.20f;
 static const CGFloat velocity = 840.f;
 
 static const CGFloat MMDrawerDefaultShadowRadius = 10.0f;
@@ -105,6 +108,10 @@ IDDownloadBlock managerFileBlock = ^(id<IDDownload> downloadOperation)
 	// Do any additional setup after loading the view, typically from a nib.
     
     [[UIApplication sharedApplication] setStatusBarHidden:YES];
+    
+    UIPanGestureRecognizer * pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panGestureCallback:)];
+    [pan setDelegate:self];
+    [self.view addGestureRecognizer:pan];
     
     downloadItems = [[NSMutableArray alloc] init];
     
@@ -324,6 +331,15 @@ IDDownloadBlock managerFileBlock = ^(id<IDDownload> downloadOperation)
                         newFrame.origin.x += shift;
                     }
                     
+                    if (newFrame.origin.x > shift)
+                    {
+                        newFrame.origin.x = shift;
+                    }
+                    else if (newFrame.origin.x <= 0.f)
+                    {
+                        newFrame.origin.x = 0.f;
+                    }
+                    
                     [mainViewController beginAppearanceTransition:YES animated:YES];
                     
                     const CGFloat distance = ABS(CGRectGetMinX(oldFrame)-newFrame.origin.x);
@@ -439,6 +455,85 @@ IDDownloadBlock managerFileBlock = ^(id<IDDownload> downloadOperation)
         frame.origin.x = isOpenMainController ? shift : 0.f;
         
         viewConroller.view.frame = frame;
+    }
+}
+
+// Method round original x
+CG_INLINE CGFloat roundedOriginXForDrawerConstriants(CGFloat originX)
+{
+    if (originX >= shift)
+    {
+        return shift;
+    }
+    else if (originX <= 0.f)
+    {
+        return 0.f;
+    }
+    
+    return originX;
+}
+
+@end
+
+@implementation IDManagerViewController (UIPanGestureRecognizer)
+
+-(void)panGestureCallback:(UIPanGestureRecognizer *)panGesture
+{
+    switch (panGesture.state)
+    {
+        case UIGestureRecognizerStateBegan:
+            _startingPanRect = mainViewController.view.frame;
+        case UIGestureRecognizerStateChanged:
+        {
+            CGRect newFrame = _startingPanRect;
+            CGPoint translatedPoint = [panGesture translationInView:mainViewController.view];
+            newFrame.origin.x = roundedOriginXForDrawerConstriants(CGRectGetMinX(_startingPanRect)+translatedPoint.x);
+            newFrame = CGRectIntegral(newFrame);
+
+            CGFloat xOffset = newFrame.origin.x;
+            CGFloat percentVisible = 0.f;
+
+            if (xOffset > 0.f)
+            {
+                percentVisible = xOffset/shift;
+            }
+            else if (xOffset < 0.f)
+            {
+                
+            }
+            
+            if (!isOpenMainController)
+            {
+//                [mainViewController beginAppearanceTransition:NO animated:NO];
+//                [mainViewController endAppearanceTransition];
+            }
+            
+            mainViewController.view.center = CGPointMake(CGRectGetMidX(newFrame), CGRectGetMidY(newFrame));
+            break;
+        }
+        case UIGestureRecognizerStateCancelled:
+        case UIGestureRecognizerStateEnded:
+        {
+            _startingPanRect = CGRectZero;
+            
+            if ([mainViewController.viewControllers count])
+            {
+                IDViewController *viewController = (IDViewController *)mainViewController.viewControllers[0];
+                viewController.moveControllerBlock();
+            }
+        }
+        {
+//            self.startingPanRect = CGRectNull;
+//            CGPoint velocity = [panGesture velocityInView:self.view];
+//            [self finishAnimationForPanGestureWithXVelocity:velocity.x completion:^(BOOL finished) {
+//                if(self.gestureCompletion){
+//                    self.gestureCompletion(self, panGesture);
+//                }
+//            }];
+            break;
+        }
+        default:
+            break;
     }
 }
 

@@ -13,7 +13,7 @@
  The instance of 'IDManagerViewController' manage all views controllers and incapsulate logic of massenges between they.
  */
 
-@interface IDManagerViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+@interface IDManagerViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate>
 {
 @protected
     IBOutlet IDManagerDownloaders *downloader;
@@ -29,6 +29,7 @@
     
 @private
     BOOL isOpenMainController;
+    CGRect _startingPanRect;
 }
 
 - (IBAction)download:(id)sender;
