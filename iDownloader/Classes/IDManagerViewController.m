@@ -149,6 +149,7 @@ IDDownloadBlock managerFileBlock = ^(id<IDDownload> downloadOperation)
     
     if (path)
     {
+        [viewsTable selectRowAtIndexPath:path animated:NO scrollPosition: UITableViewScrollPositionBottom];
         UITableViewCell *cell = [viewsTable cellForRowAtIndexPath:path];
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
     }
@@ -201,13 +202,17 @@ IDDownloadBlock managerFileBlock = ^(id<IDDownload> downloadOperation)
     {
         NSString *controllerName = [viewsList objectForKey:key];
         
-        NSLog(@"select: %@", controllerName);
-        
-        if (mainViewController.viewControllers.count > 0)
+        if (controllerName)
         {
-            IDViewController *viewController = mainViewController.viewControllers[0];
-            viewController.moveControllerBlock();
+            IDViewController *viewController = [self allocViewControllerByName:controllerName];
+            [self setCentralViewController:viewController];
         }
+        
+//        if (mainViewController.viewControllers.count > 0)
+//        {
+//            IDViewController *viewController = mainViewController.viewControllers[0];
+//            viewController.moveControllerBlock();
+//        }
     }
 }
 
@@ -350,7 +355,6 @@ IDDownloadBlock managerFileBlock = ^(id<IDDownload> downloadOperation)
 }
 
 // Method set given controller as main controller
-//- (void)setCentralViewController:(IDViewController *)centralViewController
 - (void)setCentralViewController:(UIViewController *)centralViewController
 {
     if (centralViewController)
@@ -363,12 +367,15 @@ IDDownloadBlock managerFileBlock = ^(id<IDDownload> downloadOperation)
             [mainViewController.view removeFromSuperview];
             
             [mainViewController endAppearanceTransition];
+            
             [mainViewController release];
+            mainViewController = nil;
         }
         
         if (mainViewController == nil)
         {
             mainViewController = [[UINavigationController alloc] initWithRootViewController:centralViewController];
+            [centralViewController release];
             
             @autoreleasepool
             {
@@ -386,7 +393,7 @@ IDDownloadBlock managerFileBlock = ^(id<IDDownload> downloadOperation)
                         title.backgroundColor = [UIColor clearColor];
                         title.font = [UIFont boldSystemFontOfSize:34.f];
                         title.textColor = [UIColor whiteColor];
-                        title.text = @"Browser";
+                        title.text = name;
                         
                         mainViewController.navigationBar.topItem.titleView = title;
                         [title release];

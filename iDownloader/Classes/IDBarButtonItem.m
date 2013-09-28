@@ -20,8 +20,6 @@
     self = [self initWithCustomView:buttonView];
     [barButtomView release];
     
-    NSLog(@"barButtomView retain count: %i", [buttonView retainCount]);
-    
     if (self)
     {
         [buttonView addTarget:target action:selector forControlEvents:UIControlEventTouchUpInside];

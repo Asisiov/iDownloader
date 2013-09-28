@@ -26,6 +26,10 @@
 		88101BFB17E6362500B7A198 /* ViewsList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 88101BF917E6362500B7A198 /* ViewsList.plist */; };
 		881382351788B9E900C09E68 /* IDManagerDownloaders.m in Sources */ = {isa = PBXBuildFile; fileRef = 881382341788B9E900C09E68 /* IDManagerDownloaders.m */; };
 		881382381788C14200C09E68 /* IDDownloaderBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 881382371788C14200C09E68 /* IDDownloaderBuilder.m */; };
+		882F958317F75BD000BC5A11 /* IDDownloadingListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 882F958117F75BD000BC5A11 /* IDDownloadingListViewController.m */; };
+		882F958817F75BE500BC5A11 /* IDSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 882F958617F75BE500BC5A11 /* IDSettingsViewController.m */; };
+		882F958E17F75C5000BC5A11 /* IDDownloadingListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 882F958A17F75C5000BC5A11 /* IDDownloadingListViewController.xib */; };
+		882F958F17F75C5000BC5A11 /* IDSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 882F958C17F75C5000BC5A11 /* IDSettingsViewController.xib */; };
 		884185071787763200213CCB /* IDDownloadContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 884185061787763200213CCB /* IDDownloadContext.m */; };
 		886613A517E47A4B001B7F75 /* IDManagerViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 886613A117E47A4B001B7F75 /* IDManagerViewController_iPad.xib */; };
 		886613A617E47A4B001B7F75 /* IDManagerViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 886613A317E47A4B001B7F75 /* IDManagerViewController_iPhone.xib */; };
@@ -59,6 +63,12 @@
 		881382341788B9E900C09E68 /* IDManagerDownloaders.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDManagerDownloaders.m; sourceTree = "<group>"; };
 		881382361788C14200C09E68 /* IDDownloaderBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDDownloaderBuilder.h; sourceTree = "<group>"; };
 		881382371788C14200C09E68 /* IDDownloaderBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDDownloaderBuilder.m; sourceTree = "<group>"; };
+		882F958017F75BD000BC5A11 /* IDDownloadingListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDDownloadingListViewController.h; sourceTree = "<group>"; };
+		882F958117F75BD000BC5A11 /* IDDownloadingListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDDownloadingListViewController.m; sourceTree = "<group>"; };
+		882F958517F75BE500BC5A11 /* IDSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDSettingsViewController.h; sourceTree = "<group>"; };
+		882F958617F75BE500BC5A11 /* IDSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDSettingsViewController.m; sourceTree = "<group>"; };
+		882F958B17F75C5000BC5A11 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = iDownloader/en.lproj/IDDownloadingListViewController.xib; sourceTree = SOURCE_ROOT; };
+		882F958D17F75C5000BC5A11 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = iDownloader/en.lproj/IDSettingsViewController.xib; sourceTree = SOURCE_ROOT; };
 		88418504178775E100213CCB /* IDDownload.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDDownload.h; sourceTree = "<group>"; };
 		884185051787763200213CCB /* IDDownloadContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDDownloadContext.h; sourceTree = "<group>"; };
 		884185061787763200213CCB /* IDDownloadContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDDownloadContext.m; sourceTree = "<group>"; };
@@ -117,16 +127,36 @@
 			name = Plists;
 			sourceTree = "<group>";
 		};
+		882F957E17F75B5C00BC5A11 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				882F957F17F75B6D00BC5A11 /* Root Controller */,
+				88C8874117EE0C9000C3447B /* IDBrowserViewController.h */,
+				88C8874217EE0C9000C3447B /* IDBrowserViewController.m */,
+				882F958017F75BD000BC5A11 /* IDDownloadingListViewController.h */,
+				882F958117F75BD000BC5A11 /* IDDownloadingListViewController.m */,
+				882F958517F75BE500BC5A11 /* IDSettingsViewController.h */,
+				882F958617F75BE500BC5A11 /* IDSettingsViewController.m */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		882F957F17F75B6D00BC5A11 /* Root Controller */ = {
+			isa = PBXGroup;
+			children = (
+				88101BF517E630C800B7A198 /* IDViewController.h */,
+				88101BF617E630C800B7A198 /* IDViewController.m */,
+			);
+			name = "Root Controller";
+			sourceTree = "<group>";
+		};
 		88418501178775B400213CCB /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
 				88C8874917EE166000C3447B /* Views */,
+				882F957E17F75B5C00BC5A11 /* Controllers */,
 				88A42FA5178774E9009FB554 /* IDManagerViewController.h */,
 				88A42FA6178774E9009FB554 /* IDManagerViewController.m */,
-				88101BF517E630C800B7A198 /* IDViewController.h */,
-				88101BF617E630C800B7A198 /* IDViewController.m */,
-				88C8874117EE0C9000C3447B /* IDBrowserViewController.h */,
-				88C8874217EE0C9000C3447B /* IDBrowserViewController.m */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -223,6 +253,8 @@
 				886613A117E47A4B001B7F75 /* IDManagerViewController_iPad.xib */,
 				886613A317E47A4B001B7F75 /* IDManagerViewController_iPhone.xib */,
 				88C8874617EE0D0100C3447B /* IDBrowserViewController.xib */,
+				882F958A17F75C5000BC5A11 /* IDDownloadingListViewController.xib */,
+				882F958C17F75C5000BC5A11 /* IDSettingsViewController.xib */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
@@ -344,7 +376,9 @@
 				886613A617E47A4B001B7F75 /* IDManagerViewController_iPhone.xib in Resources */,
 				886613A517E47A4B001B7F75 /* IDManagerViewController_iPad.xib in Resources */,
 				88101BFB17E6362500B7A198 /* ViewsList.plist in Resources */,
+				882F958E17F75C5000BC5A11 /* IDDownloadingListViewController.xib in Resources */,
 				88A42F8F178774B8009FB554 /* Default.png in Resources */,
+				882F958F17F75C5000BC5A11 /* IDSettingsViewController.xib in Resources */,
 				88A42F91178774B8009FB554 /* Default@2x.png in Resources */,
 				88A42F93178774B8009FB554 /* Default-568h@2x.png in Resources */,
 				88A42FAF1787751B009FB554 /* AppledocSettings.plist in Resources */,
@@ -376,6 +410,7 @@
 			files = (
 				88C8874417EE0C9000C3447B /* IDBrowserViewController.m in Sources */,
 				88A42F89178774B8009FB554 /* main.m in Sources */,
+				882F958817F75BE500BC5A11 /* IDSettingsViewController.m in Sources */,
 				88A42FA8178774E9009FB554 /* IDAppDelegate.m in Sources */,
 				88A42FA9178774E9009FB554 /* IDManagerViewController.m in Sources */,
 				884185071787763200213CCB /* IDDownloadContext.m in Sources */,
@@ -383,6 +418,7 @@
 				88101BF717E630C800B7A198 /* IDViewController.m in Sources */,
 				88ECD331178820A000B7F287 /* IDDownloadOperation+IDDownloadOperation_Protected.m in Sources */,
 				88ECD33617882C4D00B7F287 /* IDDownloader.m in Sources */,
+				882F958317F75BD000BC5A11 /* IDDownloadingListViewController.m in Sources */,
 				88C8874F17EE17E800C3447B /* IDBarButtonView.m in Sources */,
 				880B0247178862D2005BAD60 /* IDFile.m in Sources */,
 				881382351788B9E900C09E68 /* IDManagerDownloaders.m in Sources */,
@@ -400,6 +436,22 @@
 				88101BFA17E6362500B7A198 /* en */,
 			);
 			name = ViewsList.plist;
+			sourceTree = "<group>";
+		};
+		882F958A17F75C5000BC5A11 /* IDDownloadingListViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				882F958B17F75C5000BC5A11 /* en */,
+			);
+			name = IDDownloadingListViewController.xib;
+			sourceTree = "<group>";
+		};
+		882F958C17F75C5000BC5A11 /* IDSettingsViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				882F958D17F75C5000BC5A11 /* en */,
+			);
+			name = IDSettingsViewController.xib;
 			sourceTree = "<group>";
 		};
 		886613A117E47A4B001B7F75 /* IDManagerViewController_iPad.xib */ = {

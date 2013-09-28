@@ -21,6 +21,9 @@
 @synthesize dataSource = dataSource;
 @synthesize moveControllerBlock;
 
+static const CGSize buttonBarSize = {36.f, 36.f};
+static const CGFloat cornerRadius = 10.f;
+
 #pragma mark Implementation Initialization Methods
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -52,14 +55,11 @@
 	// Do any additional setup after loading the view.
     
     // Create interface
-    IDBarButtonItem *leftBarItem = [[IDBarButtonItem alloc] initWithTarget:self withAction:@selector(moveController:) withSize:CGSizeMake(36.f, 36.f)];
-    
-    NSLog(@"%@", [self.navigationItem description]);
-    
+    IDBarButtonItem *leftBarItem = [[IDBarButtonItem alloc] initWithTarget:self withAction:@selector(moveController:) withSize:buttonBarSize];
     self.navigationItem.leftBarButtonItem = leftBarItem;
-    //    [leftBarItem release];
+    [leftBarItem release];
     
-    [self.navigationController.view.layer setCornerRadius:10.0f];
+    [self.navigationController.view.layer setCornerRadius:cornerRadius];
 }
 
 - (void)didReceiveMemoryWarning
