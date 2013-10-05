@@ -29,6 +29,9 @@
 // Method round original x
 CG_INLINE CGFloat roundedOriginXForDrawerConstriants(CGFloat originX);
 
+// Method call for finish animation
+-(void)finishAnimationForPanGesture;
+
 @end
 
 @interface IDManagerViewController (UIPanGestureRecognizer)
@@ -43,8 +46,9 @@ static const CGFloat shift = 255.f;
 static const CGFloat animationDuration = 0.20f;
 static const CGFloat velocity = 840.f;
 
-static const CGFloat MMDrawerDefaultShadowRadius = 10.0f;
-static const  CGFloat MMDrawerDefaultShadowOpacity = 0.8f;
+static const CGFloat defaultShadowRadius = 10.0f;
+static const CGFloat defaultShadowOpacity = 0.8f;
+static const NSTimeInterval minimumAnimationDuration = 0.15f;
 
 #pragma mark Implementation Initialization Methods
 
@@ -441,8 +445,8 @@ IDDownloadBlock managerFileBlock = ^(id<IDDownload> downloadOperation)
 - (void)setShadowForView:(UIView *)view
 {
     view.layer.masksToBounds = NO;
-    view.layer.shadowRadius = MMDrawerDefaultShadowRadius;
-    view.layer.shadowOpacity = MMDrawerDefaultShadowOpacity;
+    view.layer.shadowRadius = defaultShadowRadius;
+    view.layer.shadowOpacity = defaultShadowOpacity;
     view.layer.shadowPath = [[UIBezierPath bezierPathWithRect:view.bounds] CGPath];
 }
 
@@ -473,6 +477,51 @@ CG_INLINE CGFloat roundedOriginXForDrawerConstriants(CGFloat originX)
     return originX;
 }
 
+// Method call for finish animation
+-(void)finishAnimationForPanGesture
+{
+    if (mainViewController)
+    {
+        CGRect newFrame = CGRectZero;
+        CGFloat distance = 0.f;
+        NSTimeInterval duration = 0.0;
+        
+        if (isOpenMainController)
+        {
+            newFrame = self.view.bounds;
+            distance = ABS(CGRectGetMinX(mainViewController.view.frame));
+            duration = MAX(distance/ABS(velocity),minimumAnimationDuration);
+            
+            [mainViewController beginAppearanceTransition:NO animated:YES];
+        }
+        else
+        {
+            if(mainViewController)
+            {
+                CGRect oldFrame = mainViewController.view.frame;
+                
+                newFrame = mainViewController.view.frame;
+                newFrame.origin.x = shift;
+                
+                distance = ABS(CGRectGetMinX(oldFrame)-newFrame.origin.x);
+                duration = MAX(distance/ABS(velocity),minimumAnimationDuration);
+            }
+        }
+        
+        [UIView animateWithDuration:duration delay:0.0 options:UIViewAnimationOptionCurveEaseOut
+                         animations:^
+        {
+            mainViewController.view.frame = newFrame;
+        }
+                         completion:^(BOOL finished)
+        {
+            [mainViewController endAppearanceTransition];
+            
+            isOpenMainController = !isOpenMainController;
+        }];
+    }
+}
+
 @end
 
 @implementation IDManagerViewController (UIPanGestureRecognizer)
@@ -489,23 +538,11 @@ CG_INLINE CGFloat roundedOriginXForDrawerConstriants(CGFloat originX)
             CGPoint translatedPoint = [panGesture translationInView:mainViewController.view];
             newFrame.origin.x = roundedOriginXForDrawerConstriants(CGRectGetMinX(_startingPanRect)+translatedPoint.x);
             newFrame = CGRectIntegral(newFrame);
-
-            CGFloat xOffset = newFrame.origin.x;
-            CGFloat percentVisible = 0.f;
-
-            if (xOffset > 0.f)
-            {
-                percentVisible = xOffset/shift;
-            }
-            else if (xOffset < 0.f)
-            {
-                
-            }
             
             if (!isOpenMainController)
             {
-//                [mainViewController beginAppearanceTransition:NO animated:NO];
-//                [mainViewController endAppearanceTransition];
+                [mainViewController beginAppearanceTransition:NO animated:NO];
+                [mainViewController endAppearanceTransition];
             }
             
             mainViewController.view.center = CGPointMake(CGRectGetMidX(newFrame), CGRectGetMidY(newFrame));
@@ -514,22 +551,8 @@ CG_INLINE CGFloat roundedOriginXForDrawerConstriants(CGFloat originX)
         case UIGestureRecognizerStateCancelled:
         case UIGestureRecognizerStateEnded:
         {
-            _startingPanRect = CGRectZero;
-            
-            if ([mainViewController.viewControllers count])
-            {
-                IDViewController *viewController = (IDViewController *)mainViewController.viewControllers[0];
-                viewController.moveControllerBlock();
-            }
-        }
-        {
-//            self.startingPanRect = CGRectNull;
-//            CGPoint velocity = [panGesture velocityInView:self.view];
-//            [self finishAnimationForPanGestureWithXVelocity:velocity.x completion:^(BOOL finished) {
-//                if(self.gestureCompletion){
-//                    self.gestureCompletion(self, panGesture);
-//                }
-//            }];
+            _startingPanRect = CGRectNull;
+            [self finishAnimationForPanGesture];
             break;
         }
         default:
