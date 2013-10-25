@@ -51,6 +51,7 @@
 		88ECD331178820A000B7F287 /* IDDownloadOperation+IDDownloadOperation_Protected.m in Sources */ = {isa = PBXBuildFile; fileRef = 88ECD330178820A000B7F287 /* IDDownloadOperation+IDDownloadOperation_Protected.m */; };
 		88ECD33617882C4D00B7F287 /* IDDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 88ECD33517882C4D00B7F287 /* IDDownloader.m */; };
 		88F3E30017877BC200CD5AE4 /* IDDownloadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 88F3E2FF17877BC200CD5AE4 /* IDDownloadOperation.m */; };
+		88FC25D1181AE66700911B00 /* IDURLExtractor.m in Sources */ = {isa = PBXBuildFile; fileRef = 88FC25D0181AE66700911B00 /* IDURLExtractor.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -103,6 +104,8 @@
 		88ECD33517882C4D00B7F287 /* IDDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDDownloader.m; sourceTree = "<group>"; };
 		88F3E2FE17877BC200CD5AE4 /* IDDownloadOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDDownloadOperation.h; sourceTree = "<group>"; };
 		88F3E2FF17877BC200CD5AE4 /* IDDownloadOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDDownloadOperation.m; sourceTree = "<group>"; };
+		88FC25CF181AE66700911B00 /* IDURLExtractor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDURLExtractor.h; sourceTree = "<group>"; };
+		88FC25D0181AE66700911B00 /* IDURLExtractor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDURLExtractor.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -167,6 +170,8 @@
 				88418503178775C600213CCB /* Downloader */,
 				880B0245178862D2005BAD60 /* IDFile.h */,
 				880B0246178862D2005BAD60 /* IDFile.m */,
+				88FC25CF181AE66700911B00 /* IDURLExtractor.h */,
+				88FC25D0181AE66700911B00 /* IDURLExtractor.m */,
 			);
 			name = App;
 			sourceTree = "<group>";
@@ -412,6 +417,7 @@
 				88A42F89178774B8009FB554 /* main.m in Sources */,
 				882F958817F75BE500BC5A11 /* IDSettingsViewController.m in Sources */,
 				88A42FA8178774E9009FB554 /* IDAppDelegate.m in Sources */,
+				88FC25D1181AE66700911B00 /* IDURLExtractor.m in Sources */,
 				88A42FA9178774E9009FB554 /* IDManagerViewController.m in Sources */,
 				884185071787763200213CCB /* IDDownloadContext.m in Sources */,
 				88F3E30017877BC200CD5AE4 /* IDDownloadOperation.m in Sources */,

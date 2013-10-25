@@ -218,12 +218,6 @@ IDDownloadBlock managerFileBlock = ^(id<IDDownload> downloadOperation)
             IDViewController *viewController = [self allocViewControllerByName:controllerName];
             [self setCentralViewController:viewController];
         }
-        
-//        if (mainViewController.viewControllers.count > 0)
-//        {
-//            IDViewController *viewController = mainViewController.viewControllers[0];
-//            viewController.moveControllerBlock();
-//        }
     }
 }
 
@@ -435,7 +429,6 @@ IDDownloadBlock managerFileBlock = ^(id<IDDownload> downloadOperation)
         [self setPositionViewControllerView:mainViewController];
         [self setShadowForView:mainViewController.view];
         
-        //    [mainViewController beginAppearanceTransition:YES animated:NO];
         [mainViewController endAppearanceTransition];
         [mainViewController didMoveToParentViewController:self];
     }

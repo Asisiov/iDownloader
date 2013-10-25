@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="4510" systemVersion="12F37" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="4510" systemVersion="12F45" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment defaultVersion="1536" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3742"/>
@@ -7,14 +7,61 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="IDBrowserViewController">
             <connections>
+                <outlet property="goButton" destination="j7n-Ua-NdL" id="Qqw-vP-Xus"/>
+                <outlet property="searchBar" destination="t6Z-kx-h60" id="gTN-bO-nSB"/>
                 <outlet property="view" destination="2" id="3"/>
+                <outlet property="webView" destination="ael-zE-ANG" id="dEY-E1-nYP"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="2">
             <rect key="frame" x="0.0" y="0.0" width="768" height="1004"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="t6Z-kx-h60">
+                    <rect key="frame" x="20" y="52" width="614" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="30" id="TPu-B3-LwU"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits"/>
+                </textField>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j7n-Ua-NdL">
+                    <rect key="frame" x="656" y="52" width="92" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="92" id="DRj-b6-ida"/>
+                        <constraint firstAttribute="height" constant="30" id="pKg-e0-fsB"/>
+                    </constraints>
+                    <state key="normal" title="Go">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="goButtonAction:" destination="-1" eventType="touchUpInside" id="B0U-dz-Heq"/>
+                    </connections>
+                </button>
+                <webView contentMode="scaleAspectFit" misplaced="YES" scalesPageToFit="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ael-zE-ANG">
+                    <rect key="frame" x="20" y="109" width="728" height="402"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <outlet property="delegate" destination="-1" id="Osa-Fn-FmV"/>
+                    </connections>
+                </webView>
+            </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="t6Z-kx-h60" secondAttribute="trailing" constant="134" id="2mw-w8-kCC"/>
+                <constraint firstItem="ael-zE-ANG" firstAttribute="leading" secondItem="2" secondAttribute="leading" constant="20" id="53l-ac-dik"/>
+                <constraint firstItem="t6Z-kx-h60" firstAttribute="leading" secondItem="2" secondAttribute="leading" constant="20" id="Gik-Em-dou"/>
+                <constraint firstAttribute="bottom" secondItem="ael-zE-ANG" secondAttribute="bottom" constant="20" id="Mpk-If-NwC"/>
+                <constraint firstAttribute="trailing" secondItem="j7n-Ua-NdL" secondAttribute="trailing" constant="20" id="ekd-pH-uB2"/>
+                <constraint firstItem="ael-zE-ANG" firstAttribute="top" secondItem="j7n-Ua-NdL" secondAttribute="bottom" constant="27" id="ggx-1n-Jie"/>
+                <constraint firstItem="j7n-Ua-NdL" firstAttribute="top" secondItem="2" secondAttribute="top" constant="52" id="osx-Bp-fg5"/>
+                <constraint firstItem="t6Z-kx-h60" firstAttribute="top" secondItem="2" secondAttribute="top" constant="52" id="roj-Hu-L9U"/>
+                <constraint firstAttribute="trailing" secondItem="ael-zE-ANG" secondAttribute="trailing" constant="20" id="tVQ-lg-saB"/>
+            </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
         </view>
     </objects>
